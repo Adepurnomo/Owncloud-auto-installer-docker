@@ -31,6 +31,7 @@ echo "${hijau}Instlling docker + enable service..."
 echo "${hijau}Create instansi..."  
 cd /opt > /dev/null 2>&1
 /bin/mkdir /opt/owncloud-docker-server > /dev/null 2>&1
+chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
 cd owncloud-docker-server > /dev/null 2>&1
 
 echo "${hijau}Create configuration for owncloud , *silahkan edit ..."
