@@ -4,9 +4,9 @@ kuning=$(tput setaf 3)
 echo "${hijau}######################################"
 echo "${hijau}Please run this scripts on SU"
 echo "######################################"
-yum install git -y > /dev/null 2>&1
+/bin/yum install git -y > /dev/null 2>&1
 cd /root/
-git clone https://github.com/Adepurnomo/test.git
+/bin/git clone https://github.com/Adepurnomo/test.git
 \cp /root/test/issue.net /etc
 chmod a+x /etc/issue.net
 cd /etc/ssh/ 	
@@ -17,25 +17,25 @@ rm -rf /root/test
 
 sleep 10
 echo "${hijau}Instlling curl..."
-yum insta curl -y > /dev/null 2>&1
+yum install curl -y > /dev/null 2>&1
 echo "${hijau} download docker composer..please wait ..."
-curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose > /dev/null 2>&1
+/bin/curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose > /dev/null 2>&1
 chmod a+x /usr/local/bin/docker-compose > /dev/null 2>&1
 
 echo "${hijau}Instlling docker + enable service..."
-yum install docker -y > /dev/null 2>&1
+/bin/yum install docker -y > /dev/null 2>&1
 
-systemctl start docker.service > /dev/null 2>&1
-systemctl enable docker.service > /dev/null 2>&1
+/bin/systemctl start docker.service > /dev/null 2>&1
+/bin/systemctl enable docker.service > /dev/null 2>&1
 
 echo "${hijau}Create instansi..."  
 cd /opt > /dev/null 2>&1
-mkdir owncloud-docker-server > /dev/null 2>&1
+/bin/mkdir /opt/owncloud-docker-server > /dev/null 2>&1
 cd owncloud-docker-server > /dev/null 2>&1
 
 echo "${hijau}Create configuration for owncloud , *silahkan edit ..."
 
-cat << EOF > docker-compose.yml
+/bin/cat << EOF >> /opt/owncloud-docker-server/docker-compose.yml
 version: '2.1'
 
 volumes:
@@ -111,7 +111,7 @@ services:
 EOF
 
 echo "${hijau}Create connection to database *laravel mode..."
-cat << EOF > .env
+/bin/cat << EOF >> /opt/owncloud-docker-server/.env
 OWNCLOUD_VERSION=10.0
 OWNCLOUD_DOMAIN=localhost
 ADMIN_USERNAME=admin
@@ -119,7 +119,7 @@ ADMIN_PASSWORD=admin
 HTTP_PORT=8080
 EOF
 
-/usr/bin/clear
+clear
 echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
 docker-compose up
 echo "${hijau}Done ..."
