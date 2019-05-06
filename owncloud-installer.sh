@@ -17,18 +17,21 @@ rm -rf /root/test
 
 sleep 10
 echo "${hijau}Instlling curl..."
-#yum install curl -y > /dev/null 2>&1
+echo "######################################"
+yum install curl -y > /dev/null 2>&1
 echo "${hijau} download docker composer..please wait ..."
-#/bin/curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose > /dev/null 2>&1
+/bin/curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose > /dev/null 2>&1
 chmod a+x /usr/local/bin/docker-compose > /dev/null 2>&1
 
 echo "${hijau}Instlling docker + enable service..."
-#/bin/yum install docker -y > /dev/null 2>&1
+echo "######################################"
+/bin/yum install docker -y > /dev/null 2>&1
 
 /bin/systemctl start docker.service > /dev/null 2>&1
 /bin/systemctl enable docker.service > /dev/null 2>&1
 
 echo "${hijau}Create instansi..."  
+echo "######################################"
 
 cd /opt > /dev/null 2>&1
 /bin/mkdir /root/owncloud-docker-server > /dev/null 2>&1
@@ -45,12 +48,13 @@ ADMIN_PASSWORD=admin
 HTTP_PORT=80
 EOF
 chmod a+x /root/owncloud-docker-server/.env
-clear
+
 echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
-docker-compose up
+echo "######################################"
+docker-compose up 
 echo "${hijau}Done ..."
 echo "${hijau}Login information"
 echo "${hijau}ADMIN_USERNAME=admin"
 echo "${hijau}ADMIN_PASSWORD=admin"
-
+echo "${hijau}MANUAL INSTALATION https://www.marksei.com/install-owncloud-10-server-centos/" 
 	  
