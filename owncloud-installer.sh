@@ -110,15 +110,6 @@ services:
     volumes:
       - redis:/var/lib/redis
 EOF
-chmod a+x /root/owncloud-docker-server/docker-compose.yml
-echo "${hijau}Create connection to database *laravel mode..."
-/bin/cat << EOF >> /root/owncloud-docker-server/.env
-OWNCLOUD_VERSION=10.0
-OWNCLOUD_DOMAIN=localhost
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=admin
-HTTP_PORT=8080
-EOF
 chmod a+x /root/owncloud-docker-server/.env
 clear
 echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
