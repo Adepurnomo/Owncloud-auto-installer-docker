@@ -1,6 +1,6 @@
 #!/bin/bash
+##
 hijau=$(tput setaf 2)
-kuning=$(tput setaf 3)
 echo "${hijau}######################################"
 echo "${hijau}Please run this scripts on SU"
 echo "######################################"
