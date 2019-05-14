@@ -37,7 +37,7 @@ cd /opt > /dev/null 2>&1
 /bin/mkdir /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
 /bin/cd /opt/owncloud-docker-server/ > /dev/null 2>&1
-wget https://raw.githubusercontent.com/owncloud-docker/server/master/docker-compose.yml
+wget https://raw.githubusercontent.com/Adepurnomo/owncloud-docker/master/docker-compose.yml
 
 /bin/cd /opt/owncloud-docker-server/
 cat << EOF > .env
