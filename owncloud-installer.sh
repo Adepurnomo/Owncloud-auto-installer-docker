@@ -10,6 +10,7 @@ firewall-cmd --zone=public --add-port=80/http --permanent
 firewall-cmd --zone=public --add-port=443/https --permanent
 firewall-cmd --zone=public --add-port=8080/https --permanent
 firewall-cmd --reload
+hostnamectl set-hostname owcloud
 /bin/yum install git -y > /dev/null 2>&1
 cd /root/
 /bin/git clone https://github.com/Adepurnomo/test.git
@@ -41,6 +42,7 @@ mkdir /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
 cd /opt/owncloud-docker-server > /dev/null 2>&1
 wget https://raw.githubusercontent.com/Adepurnomo/owncloud-docker/master/docker-compose.yml
+
 cat << EOF >> /opt/owncloud-docker-server/.env
 OWNCLOUD_VERSION=10.0
 OWNCLOUD_DOMAIN=localhost
@@ -49,7 +51,7 @@ ADMIN_PASSWORD=admin
 HTTP_PORT=80
 EOF
 chmod a+x /opt/owncloud-docker-server/.env
-##########################################################################
+
 /bin/systemctl start docker.service > /dev/null 2>&1
 /bin/systemctl enable docker.service > /dev/null 2>&1
 echo "----------------------------------------------------------------------"
