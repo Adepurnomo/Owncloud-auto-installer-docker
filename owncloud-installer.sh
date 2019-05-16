@@ -6,9 +6,9 @@ echo "${hijau}Please run this scripts on SU"
 echo "-------------------------------------------------"
 cd /etc/sysconfig
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
-firewall-cmd --zone=public --add-port=80/http --permanent
-firewall-cmd --zone=public --add-port=443/https --permanent
-firewall-cmd --zone=public --add-port=8080/https --permanent
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+firewall-cmd --zone=public --add-port=443/tcp --permanent
+firewall-cmd --zone=public --add-port=8080/tcp --permanent
 firewall-cmd --reload
 hostnamectl set-hostname owcloud
 /bin/yum install git -y > /dev/null 2>&1
