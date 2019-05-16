@@ -17,7 +17,7 @@ rm -rf /root/test
 sleep 10
 echo "-------------------------------------------------"
 echo "${hijau}Instlling curl..."
-eecho "-------------------------------------------------"
+echo "-------------------------------------------------"
 yum install curl -y > /dev/null 2>&1
 echo "-------------------------------------------------"
 echo "${hijau}download docker composer..please wait ..."
