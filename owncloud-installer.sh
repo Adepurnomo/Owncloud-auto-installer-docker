@@ -19,7 +19,9 @@ echo "######################################"
 echo "${hijau}Instlling curl..."
 echo "######################################"
 yum install curl -y > /dev/null 2>&1
-echo "${hijau} download docker composer..please wait ..."
+echo "-------------------------------------------------"
+echo "${hijau}download docker composer..please wait ..."
+echo "-------------------------------------------------"
 /bin/curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose > /dev/null 2>&1
 chmod a+x /usr/local/bin/docker-compose > /dev/null 2>&1
 echo "######################################"
