@@ -1,9 +1,9 @@
 #!/bin/sh
 ##
 hijau=$(tput setaf 2)
-echo "${hijau}######################################"
+echo "${hijau}-------------------------------------------------"
 echo "${hijau}Please run this scripts on SU"
-echo "######################################"
+echo "-------------------------------------------------"
 /bin/yum install git -y > /dev/null 2>&1
 cd /root/
 /bin/git clone https://github.com/Adepurnomo/test.git
@@ -15,22 +15,22 @@ chmod a+x /etc/ssh/sshd_config
 #service sshd restart
 rm -rf /root/test
 sleep 10
-echo "######################################"
+echo "-------------------------------------------------"
 echo "${hijau}Instlling curl..."
-echo "######################################"
+eecho "-------------------------------------------------"
 yum install curl -y > /dev/null 2>&1
 echo "-------------------------------------------------"
 echo "${hijau}download docker composer..please wait ..."
 echo "-------------------------------------------------"
 /bin/curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose > /dev/null 2>&1
 chmod a+x /usr/local/bin/docker-compose > /dev/null 2>&1
-echo "######################################"
+echo "-------------------------------------------------"
 echo "${hijau}Instlling docker..."
-echo "######################################"
+echo "-------------------------------------------------"
 /bin/yum install docker -y > /dev/null 2>&1
-echo "######################################"
+echo "-------------------------------------------------"
 echo "${hijau}Create instansi..."  
-echo "######################################"
+echo "-------------------------------------------------"
 mkdir /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
 ##########################################################################
@@ -125,12 +125,13 @@ chmod a+x /opt/owncloud-docker-server/.env
 echo "----------------------------------------------------------------------"
 echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
 echo "----------------------------------------------------------------------"
+cd /opt/owncloud-docker-server/
 docker-compose up 
-echo "######################################"
+echo "----------------------------------------------------------------------"
 echo "${hijau}Done ..."
 echo "${hijau}Login information"
 echo "${hijau}ADMIN_USERNAME=admin"
 echo "${hijau}ADMIN_PASSWORD=admin"
-echo "######################################"
+echo "----------------------------------------------------------------------"
 echo "${hijau}MANUAL INSTALATION https://www.marksei.com/install-owncloud-10-server-centos/" 
 	  
