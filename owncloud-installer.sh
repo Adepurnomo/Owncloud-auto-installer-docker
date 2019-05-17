@@ -4,6 +4,10 @@ hijau=$(tput setaf 2)
 echo "${hijau}-------------------------------------------------"
 echo "${hijau}Please run this scripts on SU"
 echo "-------------------------------------------------"
+echo "${hijau}-------------------------------------------------"
+echo "${hijau}configure....."
+echo "-------------------------------------------------"
+setenforce 0
 cd /etc/sysconfig
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
 firewall-cmd --zone=public --add-port=80/tcp --permanent
@@ -23,9 +27,9 @@ chmod a+x /etc/ssh/sshd_config
 rm -rf /root/test
 sleep 10
 echo "-------------------------------------------------"
-echo "${hijau}Instlling curl..."
+echo "${hijau}Working....."
 echo "-------------------------------------------------"
-yum install curl -y > /dev/null 2>&1
+yum install wget -y > /dev/null 2>&1
 echo "-------------------------------------------------"
 echo "${hijau}download docker composer..please wait ..."
 echo "-------------------------------------------------"
