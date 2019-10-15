@@ -1,2 +1,2 @@
 # owncloud-docker
-run --> curl -sL https://raw.githubusercontent.com/Adepurnomo/Owncloud-auto-installer-docker/master/owncloud-installer.sh | bash
+run --> curl -sL https://raw.githubusercontent.com/Adepurnomo/Owncloud-auto-installer-docker-Centos7/master/owncloud-installer.sh | bash
