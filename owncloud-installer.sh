@@ -45,7 +45,7 @@ echo "-------------------------------------------------"
 mkdir /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
 cd /opt/owncloud-docker-server > /dev/null 2>&1
-wget https://raw.githubusercontent.com/Adepurnomo/owncloud-docker/master/docker-compose.yml
+wget https://raw.githubusercontent.com/Adepurnomo/Owncloud-auto-installer-docker-Centos7/master/docker-compose.yml
 
 cat << EOF >> /opt/owncloud-docker-server/.env
 OWNCLOUD_VERSION=10.0
