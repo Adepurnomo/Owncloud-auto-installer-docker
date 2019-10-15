@@ -62,12 +62,12 @@ echo "----------------------------------------------------------------------"
 echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
 echo "----------------------------------------------------------------------"
 cd /opt/owncloud-docker-server/
-docker-compose up 
+docker-compose up -d
 echo "----------------------------------------------------------------------"
 echo "${hijau}Done ..."
 echo "${hijau}Login information"
 echo "${hijau}ADMIN_USERNAME=admin"
 echo "${hijau}ADMIN_PASSWORD=admin"
 echo "----------------------------------------------------------------------"
-echo "${hijau}MANUAL INSTALATION https://www.marksei.com/install-owncloud-10-server-centos/" 
+
 	  
