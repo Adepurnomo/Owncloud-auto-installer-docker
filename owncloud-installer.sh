@@ -17,14 +17,16 @@ firewall-cmd --zone=public --add-port=8080/tcp --permanent
 firewall-cmd --reload
 hostnamectl set-hostname owcloud
 /bin/yum install git -y > /dev/null 2>&1
+
 cd /root/
-/bin/git clone https://github.com/Adepurnomo/test.git
-\cp /root/test/issue.net /etc
-chmod a+x /etc/issue.net
+/bin/git clone https://github.com/Adepurnomo/banner.git
+\cp /root/banner/issue.net /etc
+/bin/chmod a+x /etc/issue.net
 cd /etc/ssh/ 	
-sed -i "s|#Banner none|Banner /etc/issue.net|" sshd_config
-chmod a+x /etc/ssh/sshd_config
-rm -rf /root/test
+/bin/sed -i "s|#Banner none|Banner /etc/issue.net|" sshd_config
+/bin/chmod a+x /etc/ssh/sshd_config
+/bin/rm -rf /root/banner
+
 sleep 10
 echo "-------------------------------------------------"
 echo "${hijau}Working....."
