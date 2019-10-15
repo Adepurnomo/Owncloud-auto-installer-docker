@@ -23,7 +23,6 @@ chmod a+x /etc/issue.net
 cd /etc/ssh/ 	
 sed -i "s|#Banner none|Banner /etc/issue.net|" sshd_config
 chmod a+x /etc/ssh/sshd_config
-service sshd restart
 rm -rf /root/test
 sleep 10
 echo "-------------------------------------------------"
@@ -70,6 +69,7 @@ echo "and then acces http://$host"
 echo "${hijau}Login information"
 echo "${hijau}ADMIN_USERNAME=admin"
 echo "${hijau}ADMIN_PASSWORD=admin"
+service sshd restart > /dev/null 2>&1
 echo "----------------------------------------------------------------------"
 
 	  
