@@ -23,7 +23,7 @@ chmod a+x /etc/issue.net
 cd /etc/ssh/ 	
 sed -i "s|#Banner none|Banner /etc/issue.net|" sshd_config
 chmod a+x /etc/ssh/sshd_config
-#service sshd restart
+service sshd restart
 rm -rf /root/test
 sleep 10
 echo "-------------------------------------------------"
@@ -65,6 +65,8 @@ cd /opt/owncloud-docker-server/
 docker-compose up -d
 echo "----------------------------------------------------------------------"
 echo "${hijau}Done ..."
+host=$(hostname -I)
+echo "and then acces http://$host"
 echo "${hijau}Login information"
 echo "${hijau}ADMIN_USERNAME=admin"
 echo "${hijau}ADMIN_PASSWORD=admin"
