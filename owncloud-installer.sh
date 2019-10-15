@@ -2,6 +2,7 @@
 ##
 hijau=$(tput setaf 2)
 echo "${hijau}-------------------------------------------------"
+sudo su -
 echo "${hijau}Please run this scripts on SU"
 echo "-------------------------------------------------"
 echo "${hijau}-------------------------------------------------"
@@ -30,16 +31,16 @@ echo "${hijau}Working....."
 echo "-------------------------------------------------"
 yum install wget -y > /dev/null 2>&1
 echo "-------------------------------------------------"
-echo "${hijau}download docker composer..please wait ..."
+echo "${hijau}get docker composer..please wait ..."
 echo "-------------------------------------------------"
 /bin/curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose > /dev/null 2>&1
 chmod a+x /usr/local/bin/docker-compose > /dev/null 2>&1
 echo "-------------------------------------------------"
-echo "${hijau}Instlling docker..."
+echo "${hijau}Installing docker..."
 echo "-------------------------------------------------"
 /bin/yum install docker -y > /dev/null 2>&1
 echo "-------------------------------------------------"
-echo "${hijau}Create instansi..."  
+echo "${hijau}Create instance..."  
 echo "-------------------------------------------------"
 mkdir /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
