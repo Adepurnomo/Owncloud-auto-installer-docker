@@ -142,11 +142,17 @@ cd /opt/owncloud-docker-server/
 docker-compose up -d
 
 cd ~
+curl -sSL --connect-timeout 10 --retry 3 https://raw.githubusercontent.com/netdata/netdata-demo-site/master/install-required-packages.sh
+/usr/bin/bash install-required-packages.sh
+curl -sSL --connect-timeout 10 --retry 3 https://storage.googleapis.com/netdata-nightlies/sha256sums.txt
+curl -sSL --connect-timeout 10 --retry 3 https://storage.googleapis.com/netdata-nightlies/netdata-latest.tar.gz
+tar -xf netdata-latest.tar.gz
+
 git clone https://github.com/netdata/netdata.git
 cd /root/netdata
 chmod 7777 netdata-installer.sh
 sed -i 's/-eq 0/--skip-keypress /g' /root/netdata/netdata-installer.sh
-./netdata-installer.sh
+./netdata-installer.sh --auto-update
 cd ~
 rm -rf netdata
 
@@ -162,4 +168,5 @@ echo "----------------------------------------------------------------------"
 echo "and then acces netdata http://$host:19999"
 service sshd restart > /dev/null 2>&1
 echo "----------------------------------------------------------------------"
+rm -rf /root/*
 sleep 10
