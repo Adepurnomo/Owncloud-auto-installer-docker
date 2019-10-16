@@ -139,31 +139,13 @@ echo "----------------------------------------------------------------------"
 cd /opt/owncloud-docker-server/
 docker-compose up -d
 
-mkdir /opt/netdata/
-chmod 777 /opt/netdata/
-cat << EOF >> /opt/netdata/docker-compose.yml
-version: '3'
-services:
-  netdata:
-    image: netdata/netdata
-    hostname: example.com # set to fqdn of host
-    ports:
-      - 19999:19999
-    cap_add:
-      - SYS_PTRACE
-    security_opt:
-      - apparmor:unconfined
-    volumes:
-      - /etc/passwd:/host/etc/passwd:ro
-      - /etc/group:/host/etc/group:ro
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-EOF
-
-chmod 777 /opt/netdata/docker-compose.yml
-cd /opt/netdata/
-docker-compose up -d
 cd ~
+git clone https://github.com/netdata/netdata.git
+cd /root/netdata
+chmod 7777 netdata-installer.sh
+sh netdata-installer.sh
+cd ~
+rm -rf netdata
 
 
 echo "----------------------------------------------------------------------"
