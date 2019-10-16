@@ -143,6 +143,7 @@ cd ~
 git clone https://github.com/netdata/netdata.git
 cd /root/netdata
 chmod 7777 netdata-installer.sh
+sed -i 's/-eq 0/--skip-keypress /g' /root/netdata/netdata-installer.sh
 sh netdata-installer.sh
 cd ~
 rm -rf netdata
