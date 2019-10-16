@@ -18,6 +18,7 @@ firewall-cmd --reload
 hostnamectl set-hostname owcloud
 /bin/yum install git -y > /dev/null 2>&1
 
+yum install Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel -y > /dev/null 2>&1
 cd /root/
 /bin/git clone https://github.com/Adepurnomo/banner.git
 \cp /root/banner/issue.net /etc
