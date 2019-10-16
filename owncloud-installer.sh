@@ -49,10 +49,7 @@ chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
 cd /opt/owncloud-docker-server > /dev/null 2>&1
 #wget https://raw.githubusercontent.com/Adepurnomo/Owncloud-auto-installer-docker-Centos7/master/docker-compose.yml
 
-cat <<EOF>> /opt/owncloud-docker-server/docker-compose.yml
-version: '2.1'
-
-volumes:
+echo 'volumes:
   files:
     driver: local
   mysql:
@@ -61,7 +58,6 @@ volumes:
     driver: local
   redis:
     driver: local
-
 services:
   owncloud:
     image: owncloud/server:${OWNCLOUD_VERSION}
@@ -90,7 +86,6 @@ services:
       retries: 5
     volumes:
       - files:/mnt/data
-
   db:
     image: webhippie/mariadb:latest
     restart: always
@@ -109,7 +104,6 @@ services:
     volumes:
       - mysql:/var/lib/mysql
       - backup:/var/lib/backup
-
   redis:
     image: webhippie/redis:latest
     restart: always
@@ -121,8 +115,9 @@ services:
       timeout: 10s
       retries: 5
     volumes:
-      - redis:/var/lib/redis
-EOF
+      - redis:/var/lib/redis' > /opt/owncloud-docker-server/docker-compose.yml 
+sed  -i "1i version: '2.1'" /opt/owncloud-docker-server/docker-compose.yml
+
 chmod 777 /opt/owncloud-docker-server/docker-compose.yml
 
 cat << EOF >> /opt/owncloud-docker-server/.env
@@ -142,6 +137,8 @@ echo "----------------------------------------------------------------------"
 cd /opt/owncloud-docker-server/
 docker-compose up -d
 
+mkdir /opt/netdata/
+chmod 777 /opt/netdata/
 cat << EOF >> /opt/netdata/docker-compose.yml
 version: '3'
 services:
@@ -179,5 +176,3 @@ echo "and then acces netdata http://$host:19999"
 service sshd restart > /dev/null 2>&1
 echo "----------------------------------------------------------------------"
 sleep 10
-
-	  
