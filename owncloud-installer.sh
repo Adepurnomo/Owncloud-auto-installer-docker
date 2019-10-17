@@ -141,14 +141,14 @@ cd /opt/owncloud-docker-server/
 docker-compose up -d
 
 #for netdata
-yum install Judy-devel libuv-devel autoconf-archive zlib-devel libuuid-devel libmnl-devel libuv-devel lz4-devel openssl-devel Judy-devel -y
+yum install autogen automake gcc nmap-ncat Judy-devel libuv-devel autoconf-archive zlib-devel libuuid-devel libmnl-devel libuv-devel lz4-devel openssl-devel Judy-devel -y
 yum update -y
 cd /opt/
 git clone https://github.com/netdata/netdata.git
 cd /opt/netdata
 sed -i 's/-eq 0/--skip-keypress/g' /opt/netdata/netdata-installer.sh
 chmod 777 /opt/netdata/netdata-installer.sh
-sh netdata-installer.sh
+./netdata-installer.sh --auto-update
 
 echo "----------------------------------------------------------------------"
 echo "${hijau}Done ..."
