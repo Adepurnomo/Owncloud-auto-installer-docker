@@ -145,7 +145,7 @@ yum update -y
 cd /opt/
 git clone https://github.com/netdata/netdata.git
 cd /opt/netdata
-sed -i 's/-eq 0/0/g' /opt/netdata/netdata-installer.sh
+sed -i 's/TWAIT} -eq 0/TWAIT}  0/g' /opt/netdata/netdata-installer.sh
 
 chmod 777 /opt/netdata/netdata-installer.sh
 ./netdata-installer.sh --auto-update
