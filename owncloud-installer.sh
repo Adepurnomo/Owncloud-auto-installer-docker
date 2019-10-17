@@ -160,6 +160,7 @@ echo "${hijau}ADMIN_USERNAME=admin"
 echo "${hijau}ADMIN_PASSWORD=admin"
 echo "----------------------------------------------------------------------"
 echo "and then acces netdata http://$host:19999"
+echo "can't access netdata ?, please reboot your server.
 service sshd restart > /dev/null 2>&1
 echo "----------------------------------------------------------------------"
 rm -rf /root/*
