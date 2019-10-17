@@ -11,6 +11,7 @@ echo "${hijau}configure....."
 echo "-------------------------------------------------"
 
 cd /etc/sysconfig
+setenforce 0
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
 firewall-cmd --zone=public --add-port=80/tcp --permanent
 firewall-cmd --zone=public --add-port=443/tcp --permanent
@@ -148,8 +149,6 @@ cd /opt/netdata
 sed -i 's/-eq 0/--skip-keypress/g' /opt/netdata/netdata-installer.sh
 chmod 777 /opt/netdata/netdata-installer.sh
 sh netdata-installer.sh
-sed -i 's/enforcing/disabled/g' /etc/selinux/config
-setenforce 0
 
 echo "----------------------------------------------------------------------"
 echo "${hijau}Done ..."
