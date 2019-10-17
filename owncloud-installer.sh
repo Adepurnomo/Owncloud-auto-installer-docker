@@ -65,7 +65,7 @@ services:
     image: owncloud/server:${OWNCLOUD_VERSION}
     restart: always
     ports:
-      - ${HTTP_PORT}:80
+      - ${HTTP_PORT}:8080
     depends_on:
       - db
       - redis
@@ -147,7 +147,7 @@ services:
     image: netdata/netdata
     hostname: owncloud
     ports:
-      - 8080:8080
+      - 9000:9000
     cap_add:
       - SYS_PTRACE
     security_opt:
