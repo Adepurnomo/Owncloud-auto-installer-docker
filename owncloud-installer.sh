@@ -18,10 +18,9 @@ firewall-cmd --zone=public --add-port=443/tcp --permanent
 firewall-cmd --zone=public --add-port=8080/tcp --permanent
 firewall-cmd --zone=public --add-port=19999/tcp --permanent
 firewall-cmd --reload
-hostnamectl set-hostname owcloud
+hostnamectl set-hostname owncloud
 yum install git -y > /dev/null 2>&1
 
-#yum install Judy-devel autoconf autoconf-archive autogen automake gcc git libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel -y 
 cd ~
 git clone https://github.com/Adepurnomo/banner.git
 \cp /root/banner/issue.net /etc
@@ -51,7 +50,6 @@ echo "-------------------------------------------------"
 mkdir /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
 cd /opt/owncloud-docker-server > /dev/null 2>&1
-#wget https://raw.githubusercontent.com/Adepurnomo/Owncloud-auto-installer-docker-Centos7/master/docker-compose.yml
 
 echo 'volumes:
   files:
@@ -67,7 +65,7 @@ services:
     image: owncloud/server:${OWNCLOUD_VERSION}
     restart: always
     ports:
-      - ${HTTP_PORT}:8080
+      - ${HTTP_PORT}:80
     depends_on:
       - db
       - redis
@@ -139,15 +137,6 @@ echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
 echo "----------------------------------------------------------------------"
 cd /opt/owncloud-docker-server/
 docker-compose up -d
-
-#cd ~
-#git clone https://github.com/netdata/netdata.git
-#cd /root/netdata
-#chmod 777 netdata-installer.sh
-#sed -i 's/-eq 0/--skip-keypress /g' /root/netdata/netdata-installer.sh
-#./netdata-installer.sh --auto-update
-#cd ~
-#rm -rf netdata
 
 #for netdata
 mkdir -p /opt/netdata
