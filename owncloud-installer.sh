@@ -4,7 +4,7 @@ hijau=$(tput setaf 2)
 echo "${hijau}-------------------------------------------------"
 #sudo su -
 cd ~
-chmod 777 owncloud-installer.sh
+/bin/bash chmod 777 owncloud-installer.sh
 echo "${hijau}Please run this scripts on SU"
 echo "-------------------------------------------------"
 echo "${hijau}-------------------------------------------------"
@@ -19,17 +19,17 @@ firewall-cmd --zone=public --add-port=8080/tcp --permanent
 firewall-cmd --zone=public --add-port=19999/tcp --permanent
 firewall-cmd --reload
 hostnamectl set-hostname owcloud
-/bin/yum install git -y > /dev/null 2>&1
+yum install git -y > /dev/null 2>&1
 
 yum install Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel -y 
 cd /root/
-/bin/git clone https://github.com/Adepurnomo/banner.git
+git clone https://github.com/Adepurnomo/banner.git
 \cp /root/banner/issue.net /etc
-/bin/chmod a+x /etc/issue.net
+chmod a+x /etc/issue.net
 cd /etc/ssh/ 	
-/bin/sed -i "s|#Banner none|Banner /etc/issue.net|" sshd_config
-/bin/chmod a+x /etc/ssh/sshd_config
-/bin/rm -rf /root/banner
+sed -i "s|#Banner none|Banner /etc/issue.net|" sshd_config
+chmod a+x /etc/ssh/sshd_config
+rm -rf /root/banner
 
 sleep 10
 echo "-------------------------------------------------"
@@ -39,12 +39,12 @@ yum install wget -y > /dev/null 2>&1
 echo "-------------------------------------------------"
 echo "${hijau}get docker composer..please wait ..."
 echo "-------------------------------------------------"
-/bin/curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose > /dev/null 2>&1
+curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose > /dev/null 2>&1
 chmod a+x /usr/local/bin/docker-compose > /dev/null 2>&1
 echo "-------------------------------------------------"
 echo "${hijau}Installing docker..."
 echo "-------------------------------------------------"
-/bin/yum install docker -y > /dev/null 2>&1
+yum install docker -y > /dev/null 2>&1
 echo "-------------------------------------------------"
 echo "${hijau}Create instance..."  
 echo "-------------------------------------------------"
@@ -121,7 +121,6 @@ services:
     volumes:
       - redis:/var/lib/redis' > /opt/owncloud-docker-server/docker-compose.yml 
 sed  -i "1i version: '2.1'" /opt/owncloud-docker-server/docker-compose.yml
-
 chmod 777 /opt/owncloud-docker-server/docker-compose.yml
 
 cat << EOF >> /opt/owncloud-docker-server/.env
@@ -133,8 +132,8 @@ HTTP_PORT=80
 EOF
 chmod 777 /opt/owncloud-docker-server/.env
 
-/bin/systemctl start docker.service > /dev/null 2>&1
-/bin/systemctl enable docker.service > /dev/null 2>&1
+systemctl start docker.service > /dev/null 2>&1
+systemctl enable docker.service > /dev/null 2>&1
 echo "----------------------------------------------------------------------"
 echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
 echo "----------------------------------------------------------------------"
@@ -142,20 +141,13 @@ cd /opt/owncloud-docker-server/
 docker-compose up -d
 
 cd ~
-curl -sSL --connect-timeout 10 --retry 3 https://raw.githubusercontent.com/netdata/netdata-demo-site/master/install-required-packages.sh
-/usr/bin/bash install-required-packages.sh
-curl -sSL --connect-timeout 10 --retry 3 https://storage.googleapis.com/netdata-nightlies/sha256sums.txt
-curl -sSL --connect-timeout 10 --retry 3 https://storage.googleapis.com/netdata-nightlies/netdata-latest.tar.gz
-tar -xf netdata-latest.tar.gz
-
 git clone https://github.com/netdata/netdata.git
 cd /root/netdata
-chmod 7777 netdata-installer.sh
+chmod 777 netdata-installer.sh
 sed -i 's/-eq 0/--skip-keypress /g' /root/netdata/netdata-installer.sh
 ./netdata-installer.sh --auto-update
 cd ~
 rm -rf netdata
-
 
 echo "----------------------------------------------------------------------"
 echo "${hijau}Done ..."
