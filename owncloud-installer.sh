@@ -4,7 +4,7 @@ hijau=$(tput setaf 2)
 echo "${hijau}-------------------------------------------------"
 #sudo su -
 cd ~
-/bin/bash chmod 777 owncloud-installer.sh
+chmod 777 owncloud-installer.sh
 echo "${hijau}Please run this scripts on SU"
 echo "-------------------------------------------------"
 echo "${hijau}-------------------------------------------------"
@@ -21,8 +21,8 @@ firewall-cmd --reload
 hostnamectl set-hostname owcloud
 yum install git -y > /dev/null 2>&1
 
-yum install Judy-devel autoconf autoconf-archive autogen automake gcc git libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel -y 
-cd /root/
+#yum install Judy-devel autoconf autoconf-archive autogen automake gcc git libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel -y 
+cd ~
 git clone https://github.com/Adepurnomo/banner.git
 \cp /root/banner/issue.net /etc
 chmod a+x /etc/issue.net
@@ -140,14 +140,37 @@ echo "----------------------------------------------------------------------"
 cd /opt/owncloud-docker-server/
 docker-compose up -d
 
-cd ~
-git clone https://github.com/netdata/netdata.git
-cd /root/netdata
-chmod 777 netdata-installer.sh
-sed -i 's/-eq 0/--skip-keypress /g' /root/netdata/netdata-installer.sh
-./netdata-installer.sh --auto-update
-cd ~
-rm -rf netdata
+#cd ~
+#git clone https://github.com/netdata/netdata.git
+#cd /root/netdata
+#chmod 777 netdata-installer.sh
+#sed -i 's/-eq 0/--skip-keypress /g' /root/netdata/netdata-installer.sh
+#./netdata-installer.sh --auto-update
+#cd ~
+#rm -rf netdata
+
+#for netdata
+mkdir -p /opt/netdata
+cat <<EOF>> /opt/netdata/docker-compose.yml
+version: '3'
+services:
+  netdata:
+    image: netdata/netdata
+    hostname: owncloud
+    ports:
+      - 8080:8080
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+EOF
+cd /opt/netdata
+docker-compose up -d
 
 echo "----------------------------------------------------------------------"
 echo "${hijau}Done ..."
@@ -157,7 +180,7 @@ echo "${hijau}Login information"
 echo "${hijau}ADMIN_USERNAME=admin"
 echo "${hijau}ADMIN_PASSWORD=admin"
 echo "----------------------------------------------------------------------"
-echo "and then acces netdata http://$host:19999"
+echo "and then acces netdata http://$host:8080"
 service sshd restart > /dev/null 2>&1
 echo "----------------------------------------------------------------------"
 rm -rf /root/*
