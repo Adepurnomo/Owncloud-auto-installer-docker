@@ -7,10 +7,9 @@ cd ~
 chmod 777 owncloud-installer.sh
 echo "${hijau}Please run this scripts on SU"
 echo "-------------------------------------------------"
-echo "${hijau}-------------------------------------------------"
 echo "${hijau}configure....."
 echo "-------------------------------------------------"
-setenforce 0
+
 cd /etc/sysconfig
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
 firewall-cmd --zone=public --add-port=80/tcp --permanent
@@ -22,7 +21,7 @@ hostnamectl set-hostname owncloud
 yum install git -y > /dev/null 2>&1
 
 cd ~
-git clone https://github.com/Adepurnomo/banner.git
+git clone https://github.com/Adepurnomo/banner.git > /dev/null 2>&1
 \cp /root/banner/issue.net /etc
 chmod a+x /etc/issue.net
 cd /etc/ssh/ 	
@@ -38,8 +37,10 @@ yum install wget -y > /dev/null 2>&1
 echo "-------------------------------------------------"
 echo "${hijau}get docker composer..please wait ..."
 echo "-------------------------------------------------"
-curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose > /dev/null 2>&1
-chmod a+x /usr/local/bin/docker-compose > /dev/null 2>&1
+curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose > /dev/null 2>&1
+chmod +x /usr/local/bin/docker-compose
+#curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose > /dev/null 2>&1
+#chmod a+x /usr/local/bin/docker-compose > /dev/null 2>&1
 echo "-------------------------------------------------"
 echo "${hijau}Installing docker..."
 echo "-------------------------------------------------"
@@ -47,10 +48,10 @@ yum install docker -y > /dev/null 2>&1
 echo "-------------------------------------------------"
 echo "${hijau}Create instance..."  
 echo "-------------------------------------------------"
+
 mkdir /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
 cd /opt/owncloud-docker-server > /dev/null 2>&1
-
 echo 'volumes:
   files:
     driver: local
@@ -139,27 +140,16 @@ cd /opt/owncloud-docker-server/
 docker-compose up -d
 
 #for netdata
-mkdir -p /opt/netdata
-cat <<EOF>> /opt/netdata/docker-compose.yml
-version: '3'
-services:
-  netdata:
-    image: netdata/netdata
-    hostname: owncloud
-    ports:
-      - 9000:9000
-    cap_add:
-      - SYS_PTRACE
-    security_opt:
-      - apparmor:unconfined
-    volumes:
-      - /etc/passwd:/host/etc/passwd:ro
-      - /etc/group:/host/etc/group:ro
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-EOF
+yum install Judy-devel libuv-devel autoconf-archive zlib-devel libuuid-devel libmnl-devel libuv-devel lz4-devel openssl-devel Judy-devel -y
+yum update -y
+cd /opt/
+git clone https://github.com/netdata/netdata.git
 cd /opt/netdata
-docker-compose up -d
+sed -i 's/-eq 0/--skip-keypress/g' /opt/netdata/netdata-installer.sh
+chmod 777 /opt/netdata/netdata-installer.sh
+sh netdata-installer.sh
+sed -i 's/enforcing/disabled/g' /etc/selinux/config
+setenforce 0
 
 echo "----------------------------------------------------------------------"
 echo "${hijau}Done ..."
@@ -169,7 +159,7 @@ echo "${hijau}Login information"
 echo "${hijau}ADMIN_USERNAME=admin"
 echo "${hijau}ADMIN_PASSWORD=admin"
 echo "----------------------------------------------------------------------"
-echo "and then acces netdata http://$host:8080"
+echo "and then acces netdata http://$host:19999"
 service sshd restart > /dev/null 2>&1
 echo "----------------------------------------------------------------------"
 rm -rf /root/*
