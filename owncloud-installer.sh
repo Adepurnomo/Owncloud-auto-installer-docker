@@ -12,6 +12,7 @@ echo "-------------------------------------------------"
 
 cd /etc/sysconfig
 setenforce 0
+
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
 firewall-cmd --zone=public --add-port=80/tcp --permanent
 firewall-cmd --zone=public --add-port=443/tcp --permanent
@@ -144,7 +145,7 @@ yum update -y
 cd /opt/
 git clone https://github.com/netdata/netdata.git
 cd /opt/netdata
-sed -i 's/-eq 0/--skip-keypress/g' /opt/netdata/netdata-installer.sh
+sed -i "s|[ ${DONOTWAIT} -eq 0 ]|[ ${DONOTWAIT} -e 0 ]|" netdata-installer.sh
 chmod 777 /opt/netdata/netdata-installer.sh
 ./netdata-installer.sh --auto-update
 
@@ -163,5 +164,4 @@ echo "and then acces netdata http://$host:19999"
 echo "can't access netdata ?, please reboot your server.
 service sshd restart > /dev/null 2>&1
 echo "----------------------------------------------------------------------"
-rm -rf /root/*
 sleep 10
