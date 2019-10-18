@@ -10,15 +10,6 @@ echo "-------------------------------------------------"
 echo "${hijau}configure....."
 echo "-------------------------------------------------"
 
-cd /etc/sysconfig
-setenforce 0
-
-sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
-firewall-cmd --zone=public --add-port=80/tcp --permanent
-firewall-cmd --zone=public --add-port=443/tcp --permanent
-firewall-cmd --zone=public --add-port=8080/tcp --permanent
-firewall-cmd --zone=public --add-port=19999/tcp --permanent
-firewall-cmd --reload
 hostnamectl set-hostname owncloud
 yum install git -y > /dev/null 2>&1
 
@@ -151,6 +142,16 @@ chmod 777 /opt/netdata/netdata-installer.sh
 
 cd /opt/owncloud-docker-server/
 docker-compose up -d
+
+cd /etc/sysconfig
+setenforce 0
+sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+firewall-cmd --zone=public --add-port=443/tcp --permanent
+firewall-cmd --zone=public --add-port=8080/tcp --permanent
+firewall-cmd --zone=public --add-port=19999/tcp --permanent
+firewall-cmd --reload
+cd ~
 
 echo "----------------------------------------------------------------------"
 echo "${hijau}Done ..."
