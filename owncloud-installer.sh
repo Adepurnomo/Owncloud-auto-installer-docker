@@ -141,7 +141,6 @@ echo "----------------------------------------------------------------------"
 
 #for netdata
 yum install autogen automake gcc nmap-ncat Judy-devel libuv-devel autoconf-archive zlib-devel libuuid-devel libmnl-devel libuv-devel lz4-devel openssl-devel Judy-devel -y
-yum update -y
 cd /opt/
 git clone https://github.com/netdata/netdata.git
 cd /opt/netdata
@@ -163,6 +162,7 @@ echo "${hijau}ADMIN_PASSWORD=admin"
 echo "----------------------------------------------------------------------"
 echo "and then acces netdata http://$host:19999"
 echo "can't access netdata ?, please reboot your server.
+sleep 10
 service sshd restart > /dev/null 2>&1
 echo "----------------------------------------------------------------------"
-sleep 10
+
