@@ -9,11 +9,12 @@ echo "${hijau}Please run this scripts on SU"
 echo "-------------------------------------------------"
 echo "${hijau}configure...please wait.."
 echo "-------------------------------------------------"
-cd /etc/sysconfig
 setenforce 0
+cd /etc/sysconfig
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
 firewall-cmd --zone=public --add-port=80/tcp --permanent 
 firewall-cmd --zone=public --add-port=443/tcp --permanent 
+firewall-cmd --zone=public --add-port=19999/tcp --permanent 
 firewall-cmd --reload 
 cd ~
 yum install git curl install Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel -y > /dev/null 2>&1
@@ -124,11 +125,12 @@ chmod 777 /opt/owncloud-docker-server/.env
 
 cd /opt
 git clone https://github.com/netdata/netdata.git
+chmod a+x /opt/netdata/netdata-installer.sh
 sed -i 's/WAIT} -eq 0/WAIT} -eq 1/g' /opt/netdata/netdata-installer.sh
 chmod 7777 /opt/netdata/netdata-installer.sh
 cd /opt/netdata
 sh netdata-installer.sh
-
+cd ~
 echo "----------------------------------------------------------------------"
 echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
 echo "----------------------------------------------------------------------"
