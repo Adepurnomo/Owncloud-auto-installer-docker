@@ -138,8 +138,7 @@ echo "----------------------------------------------------------------------"
 echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
 echo "----------------------------------------------------------------------"
 
-systemctl start docker.service > /dev/null 2>&1
-systemctl enable docker.service > /dev/null 2>&1
+systemctl start docker.service && systemctl enable docker.service > /dev/null 2>&1
 cd /opt/owncloud-docker-server/
 docker-compose up -d
 
