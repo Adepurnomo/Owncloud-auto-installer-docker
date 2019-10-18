@@ -11,8 +11,6 @@ echo "${hijau}configure...please wait.."
 echo "-------------------------------------------------"
 
 hostnamectl set-hostname owncloud
-yum install Judy-devel autoconf autoconf-archive autogen automake gcc git libmnl-devel libuuid-devel libuv-deve lz4-devel nmap-ncat openssl-devel zlib-devel git -y > /dev/null 2>&1
-
 cd ~
 git clone https://github.com/Adepurnomo/banner.git 
 \cp /root/banner/issue.net /etc
@@ -53,7 +51,7 @@ services:
     image: owncloud/server:${OWNCLOUD_VERSION}
     restart: always
     ports:
-      - ${HTTP_PORT}:8080
+      - ${HTTP_PORT}:80
     depends_on:
       - db
       - redis
@@ -122,16 +120,6 @@ echo "----------------------------------------------------------------------"
 echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
 echo "----------------------------------------------------------------------"
 
-#for netdata
-cd /opt/
-git clone https://github.com/netdata/netdata.git 
-cd /opt/netdata
-sed -i 's/TWAIT} -eq 0/TWAIT} -eq 1/g' /opt/netdata/netdata-installer.sh
-sed -i 's/# default port = 19999 /default port = 9000/g' /etc/netdata/netdata.conf
-
-chmod 777 /opt/netdata/netdata-installer.sh
-./netdata-installer.sh --auto-update
-
 systemctl start docker.service > /dev/null 2>&1
 systemctl enable docker.service > /dev/null 2>&1
 cd /opt/owncloud-docker-server/
@@ -142,13 +130,9 @@ setenforce 0
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
 firewall-cmd --zone=public --add-port=80/tcp --permanent > /dev/null 2>&1
 firewall-cmd --zone=public --add-port=443/tcp --permanent > /dev/null 2>&1
-firewall-cmd --zone=public --add-port=8080/tcp --permanent > /dev/null 2>&1
-firewall-cmd --zone=public --add-port=19999/tcp --permanent > /dev/null 2>&1
 firewall-cmd --reload > /dev/null 2>&1
 cd ~
 systemctl restart docker > /dev/null 2>&1
-pkill -9 netdata
-systemctl restart netadata > /dev/null 2>&1
  
 echo "----------------------------------------------------------------------"
 echo "${hijau}Done ..."
@@ -158,9 +142,7 @@ echo "${hijau}Login information"
 echo "${hijau}ADMIN_USERNAME=admin"
 echo "${hijau}ADMIN_PASSWORD=admin"
 echo "----------------------------------------------------------------------"
-echo "and then acces netdata http://$host:19999"
-echo "can't access netdata ?, please reboot your server.
-sleep 10
 service sshd restart > /dev/null 2>&1
+sleep 10
 echo "----------------------------------------------------------------------"
 
