@@ -147,6 +147,7 @@ firewall-cmd --zone=public --add-port=19999/tcp --permanent > /dev/null 2>&1
 firewall-cmd --reload > /dev/null 2>&1
 cd ~
 systemctl restart docker > /dev/null 2>&1
+pkill -9 netdata
 systemctl restart netadata > /dev/null 2>&1
  
 echo "----------------------------------------------------------------------"
