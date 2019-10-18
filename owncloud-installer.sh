@@ -124,7 +124,7 @@ echo "----------------------------------------------------------------------"
 
 #for netdata
 cd /opt/
-git clone https://github.com/netdata/netdata.git --depth = 100
+git clone https://github.com/netdata/netdata.git 
 cd /opt/netdata
 sed -i 's/TWAIT} -eq 0/TWAIT} -eq 1/g' /opt/netdata/netdata-installer.sh
 sed -i 's/# default port = 19999 /default port = 9000/g' /etc/netdata/netdata.conf
