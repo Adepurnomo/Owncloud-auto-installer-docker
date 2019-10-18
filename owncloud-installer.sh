@@ -2,7 +2,7 @@
 ##
 hijau=$(tput setaf 2)
 echo "${hijau}-------------------------------------------------"
-#sudo su -
+sudo su -
 cd ~
 chmod 777 owncloud-installer.sh
 echo "${hijau}Please run this scripts on SU"
@@ -12,8 +12,11 @@ echo "-------------------------------------------------"
 setenforce 0
 cd /etc/sysconfig
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
+echo "white list port 80"
 firewall-cmd --zone=public --add-port=80/tcp --permanent 
-firewall-cmd --zone=public --add-port=443/tcp --permanent 
+echo "white list port 443"
+firewall-cmd --zone=public --add-port=443/tcp echo --permanent 
+echo "white list port 19999"
 firewall-cmd --zone=public --add-port=19999/tcp --permanent 
 firewall-cmd --reload 
 cd ~
