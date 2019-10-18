@@ -9,6 +9,13 @@ echo "${hijau}Please run this scripts on SU"
 echo "-------------------------------------------------"
 echo "${hijau}configure...please wait.."
 echo "-------------------------------------------------"
+cd /etc/sysconfig
+setenforce 0
+sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
+firewall-cmd --zone=public --add-port=80/tcp --permanent 
+firewall-cmd --zone=public --add-port=443/tcp --permanent 
+firewall-cmd --reload 
+cd ~
 yum install git curl -y > /dev/null 2>&1
 hostnamectl set-hostname owncloud
 cd ~
@@ -124,15 +131,6 @@ systemctl enable docker.service > /dev/null 2>&1
 cd /opt/owncloud-docker-server/
 docker-compose up -d
 
-cd /etc/sysconfig
-setenforce 0
-sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
-firewall-cmd --zone=public --add-port=80/tcp --permanent > /dev/null 2>&1
-firewall-cmd --zone=public --add-port=443/tcp --permanent > /dev/null 2>&1
-firewall-cmd --reload > /dev/null 2>&1
-cd ~
-systemctl restart docker > /dev/null 2>&1
- 
 echo "----------------------------------------------------------------------"
 echo "${hijau}Done ..."
 host=$(hostname -I)
