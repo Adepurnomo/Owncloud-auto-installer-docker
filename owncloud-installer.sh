@@ -129,7 +129,7 @@ chmod a+x /opt/netdata/netdata-installer.sh
 sed -i 's/WAIT} -eq 0/WAIT} -eq 1/g' /opt/netdata/netdata-installer.sh
 chmod 7777 /opt/netdata/netdata-installer.sh
 cd /opt/netdata
-sh netdata-installer.sh
+./netdata-installer.sh
 cd ~
 echo "----------------------------------------------------------------------"
 echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
