@@ -9,7 +9,7 @@ echo "${hijau}Please run this scripts on SU"
 echo "-------------------------------------------------"
 echo "${hijau}configure...please wait.."
 echo "-------------------------------------------------"
-
+yum isntall git curl -y   /dev/null 2>&1
 hostnamectl set-hostname owncloud
 cd ~
 git clone https://github.com/Adepurnomo/banner.git 
