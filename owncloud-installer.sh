@@ -16,7 +16,7 @@ firewall-cmd --zone=public --add-port=80/tcp --permanent
 firewall-cmd --zone=public --add-port=443/tcp --permanent 
 firewall-cmd --reload 
 cd ~
-yum install git curl -y > /dev/null 2>&1
+yum install git curl install Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel -y > /dev/null 2>&1
 hostnamectl set-hostname owncloud
 cd ~
 git clone https://github.com/Adepurnomo/banner.git 
@@ -122,6 +122,13 @@ HTTP_PORT=80
 EOF
 chmod 777 /opt/owncloud-docker-server/.env
 
+cd /opt
+git clone https://github.com/netdata/netdata.git
+sed -i 's/WAIT} -eq 0/WAIT} -eq 1/g' /opt/netdata/netdata-installer.sh
+chmod 7777 /opt/netdata/netdata-installer.sh
+cd /opt/netdata
+sh netdata-installer.sh
+
 echo "----------------------------------------------------------------------"
 echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
 echo "----------------------------------------------------------------------"
@@ -138,6 +145,7 @@ echo "and then acces owncloud http://$host"
 echo "${hijau}Login information"
 echo "${hijau}ADMIN_USERNAME=admin"
 echo "${hijau}ADMIN_PASSWORD=admin"
+echo "and then acces netdata http://$host:19999"
 echo "----------------------------------------------------------------------"
 service sshd restart > /dev/null 2>&1
 sleep 10
