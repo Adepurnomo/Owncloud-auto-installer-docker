@@ -140,7 +140,7 @@ echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
 echo "----------------------------------------------------------------------"
 
 #for netdata
-yum install autogen automake gcc nmap-ncat Judy-devel libuv-devel autoconf-archive zlib-devel libuuid-devel libmnl-devel libuv-devel lz4-devel openssl-devel Judy-devel -y
+yum install Judy-devel autoconf autoconf-archive autogen automake gcc git libmnl-devel libuuid-devel libuv-deve lz4-devel nmap-ncat openssl-devel zlib-devel -y
 cd /opt/
 git clone https://github.com/netdata/netdata.git
 cd /opt/netdata
