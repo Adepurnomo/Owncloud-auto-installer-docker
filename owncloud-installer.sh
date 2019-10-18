@@ -15,7 +15,7 @@ sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
 echo "white list port 80"
 firewall-cmd --zone=public --add-port=80/tcp --permanent 
 echo "white list port 443"
-firewall-cmd --zone=public --add-port=443/tcp echo --permanent 
+firewall-cmd --zone=public --add-port=443/tcp --permanent 
 echo "white list port 19999"
 firewall-cmd --zone=public --add-port=19999/tcp --permanent 
 firewall-cmd --reload 
