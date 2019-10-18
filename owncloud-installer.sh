@@ -9,7 +9,7 @@ echo "${hijau}Please run this scripts on SU"
 echo "-------------------------------------------------"
 echo "${hijau}configure...please wait.."
 echo "-------------------------------------------------"
-yum isntall git curl -y   /dev/null 2>&1
+yum install git curl -y > /dev/null 2>&1
 hostnamectl set-hostname owncloud
 cd ~
 git clone https://github.com/Adepurnomo/banner.git 
@@ -23,7 +23,6 @@ rm -rf /root/banner
 echo "-------------------------------------------------"
 echo "${hijau}Working....."
 echo "-------------------------------------------------"
-yum install wget -y > /dev/null 2>&1
 echo "${hijau}get docker composer..please wait ..."
 echo "-------------------------------------------------"
 curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose > /dev/null 2>&1
