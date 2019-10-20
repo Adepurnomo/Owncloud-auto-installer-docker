@@ -1,9 +1,9 @@
-#running owncloud on docker 
+# running owncloud on docker 
+  save and share your file on owncloud 
+# and monitor your instance with netdata
+# For Centos7
+# Enjoy !!
+Using curl
 
-#save and share your file on owncloud 
+run --> curl -sL https://raw.githubusercontent.com/Adepurnomo/Owncloud_Installer_Centos/master/owncloud-installer.sh | sh
 
-#and monitor your instance with netdata
-
-run --> curl -sL https://github.com/Adepurnomo/Owncloud_Installer_Centos7 | sh
-
-#Enjoy !!
