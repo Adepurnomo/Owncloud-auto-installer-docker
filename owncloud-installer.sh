@@ -24,7 +24,7 @@ firewall-cmd --zone=public --add-port=19999/tcp --permanent
 echo "-------------------------------------------------"
 firewall-cmd --reload 
 cd ~
-yum install git curl install Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel -y > /dev/null 2>&1
+yum install git curl Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel -y > /dev/null 2>&1
 hostnamectl set-hostname owncloud
 cd ~
 git clone https://github.com/Adepurnomo/banner.git 
