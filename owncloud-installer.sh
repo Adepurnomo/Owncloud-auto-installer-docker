@@ -131,6 +131,7 @@ HTTP_PORT=80
 EOF
 chmod 777 /opt/owncloud-docker-server/.env
 
+mkdir -p /opt/netdata/
 echo "
 version: '3'
 services:
