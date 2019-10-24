@@ -48,7 +48,7 @@ yum install docker -y > /dev/null 2>&1
 echo "${hijau}Create instance..."  
 echo "-------------------------------------------------"
 
-mkdir /opt/owncloud-docker-server > /dev/null 2>&1
+mkdir -p /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
 cd /opt/owncloud-docker-server > /dev/null 2>&1
 echo 'volumes:
