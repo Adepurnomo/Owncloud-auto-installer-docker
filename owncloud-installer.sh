@@ -155,7 +155,6 @@ systemctl start docker.service && systemctl enable docker.service > /dev/null 2>
 echo "----------------------------------------------------------------------"
 echo "${hijau}Downloading images docker from source *Sabarr ya ganss ..."
 echo "----------------------------------------------------------------------"
-echo "
 echo "${hijau}Buil and starting Only office document server, please wait..."
 docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver > /dev/null 2>&1
 echo "${hijau}Only office document server, started..."
