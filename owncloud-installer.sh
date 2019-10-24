@@ -12,12 +12,16 @@ echo "-------------------------------------------------"
 setenforce 0
 cd /etc/sysconfig
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
+echo "-------------------------------------------------"
 echo "white list port 80"
 firewall-cmd --zone=public --add-port=80/tcp --permanent 
+echo "-------------------------------------------------"
 echo "white list port 443"
 firewall-cmd --zone=public --add-port=443/tcp --permanent 
+echo "-------------------------------------------------"
 echo "white list port 19999"
 firewall-cmd --zone=public --add-port=19999/tcp --permanent 
+echo "-------------------------------------------------"
 firewall-cmd --reload 
 cd ~
 yum install git curl install Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel -y > /dev/null 2>&1
