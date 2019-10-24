@@ -1,5 +1,5 @@
-# running owncloud on docker 
-  save and share your file on owncloud 
+# running owncloud with only office document server on docker 
+# open, edit, save and share your document or file on owncloud 
 # and monitor your instance with netdata
 # For Centos7
 # Enjoy !!
