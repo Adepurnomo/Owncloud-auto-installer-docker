@@ -98,8 +98,8 @@ services:
       - MARIADB_USERNAME=owncloud
       - MARIADB_PASSWORD=owncloud
       - MARIADB_DATABASE=owncloud
-      - MARIADB_MAX_ALLOWED_PACKET=128M
-      - MARIADB_INNODB_LOG_FILE_SIZE=64M
+      - MARIADB_MAX_ALLOWED_PACKET=64M
+      - MARIADB_INNODB_LOG_FILE_SIZE=32M
     healthcheck:
       test: ["CMD", "/usr/bin/healthcheck"]
       interval: 30s
