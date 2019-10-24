@@ -18,6 +18,9 @@ echo "-------------------------------------------------"
 echo "white list port 443"
 firewall-cmd --zone=public --add-port=443/tcp --permanent 
 echo "-------------------------------------------------"
+echo "white list port 8080"
+firewall-cmd --zone=public --add-port=19999/tcp --permanent 
+echo "-------------------------------------------------"
 echo "white list port 19999"
 firewall-cmd --zone=public --add-port=19999/tcp --permanent 
 echo "-------------------------------------------------"
@@ -137,12 +140,15 @@ chmod 7777 /opt/netdata/netdata-installer.sh
 cd /opt/netdata
 ./netdata-installer.sh
 cd ~
-echo "----------------------------------------------------------------------"
-echo "${hijau}Downloading +compose file from source *Sabarr ya ganss ..."
-echo "----------------------------------------------------------------------"
-
 systemctl start docker.service && systemctl enable docker.service > /dev/null 2>&1
+echo "----------------------------------------------------------------------"
+echo "${hijau}Downloading images docker from source *Sabarr ya ganss ..."
+echo "----------------------------------------------------------------------"
+echo "${hijau}Only office document server ..."
+docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver
+echo "----------------------------------------------------------------------"
 cd /opt/owncloud-docker-server/
+echo "${hijau}Only Owncloud server ..."
 docker-compose up -d
 
 echo "----------------------------------------------------------------------"
