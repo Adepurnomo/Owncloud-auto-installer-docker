@@ -5,8 +5,7 @@ echo "${hijau}-------------------------------------------------"
 echo "${hijau}Please run this scripts on SU"
 sudo su -
 echo "${hijau}-------------------------------------------------"
-echo "${hijau}configure...please wait.."
-echo "-------------------------------------------------"
+echo "${hijau}Allow port on firewalld..."
 setenforce 0
 cd /etc/sysconfig
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
@@ -25,7 +24,8 @@ firewall-cmd --zone=public --add-port=19999/tcp --permanent
 echo "-------------------------------------------------"
 firewall-cmd --reload 
 cd ~
-yum install git -y > /dev/null 2>&1
+echo "Install dependencies....."
+yum install Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel git -y > /dev/null 2>&1
 hostnamectl set-hostname owncloud
 cd ~
 git clone https://github.com/Adepurnomo/banner.git 
@@ -48,7 +48,7 @@ echo "-------------------------------------------------"
 yum install docker -y > /dev/null 2>&1
 echo "${hijau}Create instance..."  
 echo "-------------------------------------------------"
-
+########################################################
 mkdir -p /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
 cd /opt/owncloud-docker-server > /dev/null 2>&1
@@ -121,7 +121,7 @@ services:
       - redis:/var/lib/redis' > /opt/owncloud-docker-server/docker-compose.yml 
 sed -i "1i version: '2.1'" /opt/owncloud-docker-server/docker-compose.yml
 chmod 777 /opt/owncloud-docker-server/docker-compose.yml
-
+########################################################
 cat << EOF >> /opt/owncloud-docker-server/.env
 OWNCLOUD_VERSION=10.0
 OWNCLOUD_DOMAIN=localhost
@@ -130,60 +130,40 @@ ADMIN_PASSWORD=admin
 HTTP_PORT=80
 EOF
 chmod 777 /opt/owncloud-docker-server/.env
-
-mkdir -p /opt/netdata/
-echo "
-version: '3'
-services:
-  netdata:
-    image: netdata/netdata
-    hostname: owncloud
-    ports:
-      - 19999:19999
-    cap_add:
-      - SYS_PTRACE
-    security_opt:
-      - apparmor:unconfined
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro" >> /opt/netdata/docker-compose.yaml
-chmod a+x /opt/netdata/docker-compose.yaml
-
+########################################################
 cd ~
 systemctl start docker.service && systemctl enable docker.service > /dev/null 2>&1
-echo "----------------------------------------------------------------------"
 echo "${hijau}Downloading images docker from source *Sabarr ya ganss ..."
 echo "----------------------------------------------------------------------"
 echo "${hijau}Build and starting Only office document server, please wait..."
 docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver > /dev/null 2>&1
 echo "${hijau}Only office document server, started..."
-docker ps 
+docker ps | grep  onlyoffice/documentserver
 sleep 5
 echo "----------------------------------------------------------------------"
 cd /opt/owncloud-docker-server/
 echo "${hijau}Build and starting Owncloud server, please wait ..."
 docker-compose up -d > /dev/null 2>&1
 echo "${hijau}Owncloud server, started..."
-docker ps 
+docker ps | grep owncloud
 sleep 5
 echo "----------------------------------------------------------------------"
-echo "${hijau}Build and starting Netdata please wait ..."
+cd /opt
+git clone https://github.com/netdata/netdata.git
+sed -i 's/TWAIT} -eq 0 /TWAIT} -eq 1 /g' /opt/netdata/netdata-installer.sh
+chmod a+x /opt/netdata/netdata-installer.sh
 cd /opt/netdata/
-docker-compose up -d > /dev/null 2>&1
-echo "${hijau}Netdata, started..."
-docker ps 
-sleep 5
-echo "----------------------------------------------------------------------"
+./netdata-installer.sh
+########################################################
 echo "${hijau}Complete ..."
 echo "${hijau}Enjoy !! ..."
 host=$(hostname -I)
-echo "and then acces owncloud web http://$host"
+echo "for owncloud acces http://$host"
 echo "${hijau}Login information"
 echo "${hijau}ADMIN_USERNAME=admin"
 echo "${hijau}ADMIN_PASSWORD=admin"
-echo "Document web http://$host:8080"
-echo "Netdata web http://$host:19999"
+echo "for Document server acces http://$host:8080"
+echo "for Netdata acces http://$host:19999"
 echo "----------------------------------------------------------------------"
 service sshd restart > /dev/null 2>&1
 sleep 10
