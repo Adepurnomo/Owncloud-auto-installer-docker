@@ -2,7 +2,6 @@
 ##
 hijau=$(tput setaf 2)
 echo "${hijau}-------------------------------------------------"
-sudo su -
 cd ~
 chmod 777 owncloud-installer.sh
 echo "${hijau}Please run this scripts on SU"
