@@ -158,16 +158,22 @@ echo "----------------------------------------------------------------------"
 echo "${hijau}Build and starting Only office document server, please wait..."
 docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver > /dev/null 2>&1
 echo "${hijau}Only office document server, started..."
+docker ps 
+sleep 5
 echo "----------------------------------------------------------------------"
 cd /opt/owncloud-docker-server/
 echo "${hijau}Build and starting Owncloud server, please wait ..."
 docker-compose up -d > /dev/null 2>&1
 echo "${hijau}Owncloud server, started..."
+docker ps 
+sleep 5
 echo "----------------------------------------------------------------------"
 echo "${hijau}Build and starting Netdata please wait ..."
 cd /opt/netdata/
 docker-compose up -d > /dev/null 2>&1
 echo "${hijau}Netdata, started..."
+docker ps 
+sleep 5
 echo "----------------------------------------------------------------------"
 echo "${hijau}Complete ..."
 echo "${hijau}Enjoy !! ..."
