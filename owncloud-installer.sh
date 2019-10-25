@@ -138,7 +138,7 @@ systemctl start docker.service >> /dev/null 2>&1
 systemctl enable docker.service >> /dev/null 2>&1
 echo "----------------------------------------------------------------------"
 source "/opt/temp/spinner.sh"
-start_spinner 'Build and starting Only office document server, please wait (a minut)...'
+start_spinner 'Build and starting Only office document server, please wait (a minut.....'
 sleep 1
 cd ~
 docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver > /dev/null 2>&1
@@ -148,7 +148,7 @@ echo "${kuning}Only office document server..               ${hijau}[Started]"
 sleep 5
 echo "${kuning}----------------------------------------------------------------------"
 source "/opt/temp/spinner.sh"
-start_spinner 'Build and starting Owncloud server, please wait (a minute) ....'
+start_spinner 'Build and starting Owncloud server, please wait (a minute......'
 sleep 1
 cd /opt/owncloud-docker-server/
 docker-compose up -d > /dev/null 2>&1
