@@ -5,7 +5,7 @@ echo "${hijau}-------------------------------------------------"
 echo "${hijau}Please run this scripts on SU"
 sudo su -
 echo "${hijau}-------------------------------------------------"
-echo "${hijau}Allow port on firewalld..."
+echo "${hijau}Configure firewalld..."
 setenforce 0
 cd /etc/sysconfig
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
