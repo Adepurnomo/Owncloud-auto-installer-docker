@@ -3,14 +3,16 @@
 kuning=$(tput setaf 3)
 hijau=$(tput setaf 2)
 echo "${kuning}-------------------------------------------------"
-echo "${kuning}Please run this scripts on SU"
+echo "${kuning}       Please run this scripts on SU             "
 sudo su -
 echo "${kuning}-------------------------------------------------"
 echo "${kuning}Configure firewalld..."
 setenforce 0
 mkdir -p /opt/temp/
 cd /etc/sysconfig
+#disbale selinux
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
+#configure firewall
 echo "${kuning}-------------------------------------------------"
 echo "${kuning}white list port 80"
 firewall-cmd --zone=public --add-port=80/tcp --permanent 
@@ -28,8 +30,11 @@ firewall-cmd --reload
  
 cd ~
 echo "${kuning}Initializing....."
+#Spinner tks for owner
 curl -o /opt/temp/spinner.sh https://raw.githubusercontent.com/tlatsas/bash-spinner/master/spinner.sh >> /dev/null 2>&1
+#docker engine, netdata compiler
 yum install docker Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel git -y >> /dev/null 2>&1
+#docker composer
 curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose >> /dev/null 2>&1
 cd ~
 
@@ -45,7 +50,8 @@ echo "${kuning}Create instance..."
 ########################################################
 mkdir -p /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
-cd /opt/owncloud-docker-server > /dev/null 2>&1
+cd /opt/owncloud-docker-server 
+#Create docker-composer.yml owncloud
 echo 'volumes:
   files:
     driver: local
@@ -113,8 +119,10 @@ services:
       retries: 5
     volumes:
       - redis:/var/lib/redis' > /opt/owncloud-docker-server/docker-compose.yml 
+#put tex on docker-composer.yml
 sed -i "1i version: '2.1'" /opt/owncloud-docker-server/docker-compose.yml
 chmod 777 /opt/owncloud-docker-server/docker-compose.yml
+#create .env owncloud
 ########################################################
 cat << EOF >> /opt/owncloud-docker-server/.env
 OWNCLOUD_VERSION=10.0
@@ -126,7 +134,8 @@ EOF
 chmod 777 /opt/owncloud-docker-server/.env
 ########################################################
 cd ~
-systemctl start docker.service && systemctl enable docker.service >> /dev/null 2>&1
+systemctl start docker.service >> /dev/null 2>&1
+systemctl enable docker.service >> /dev/null 2>&1
 echo "----------------------------------------------------------------------"
 source "/opt/temp/spinner.sh"
 start_spinner 'Build and starting Only office document server, please wait (a minut)...'
@@ -147,8 +156,10 @@ stop_spinner $?
 echo "${kuning}Owncloud server..                           ${hijau}[Started]"
 sleep 5
 echo "----------------------------------------------------------------------"
+#Clone netdata from source
 cd /opt
 git clone https://github.com/netdata/netdata.git >> /dev/null 2>&1
+#put 0 to 1 (skip) question for installer netdata
 sed -i 's/TWAIT} -eq 0 /TWAIT} -eq 1 /g' /opt/netdata/netdata-installer.sh
 chmod a+x /opt/netdata/netdata-installer.sh
 source "/opt/temp/spinner.sh"
