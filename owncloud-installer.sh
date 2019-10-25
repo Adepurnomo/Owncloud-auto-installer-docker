@@ -28,9 +28,11 @@ firewall-cmd --reload
  
 cd ~
 echo "${kuning}Initializing....."
-curl -o /opt/temp/spinner.sh https://raw.githubusercontent.com/tlatsas/bash-spinner/master/spinner.sh > /dev/null 2>&1
-yum install docker Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel git -y && curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose >> /dev/null 2>&1
+curl -o /opt/temp/spinner.sh https://raw.githubusercontent.com/tlatsas/bash-spinner/master/spinner.sh >> /dev/null 2>&1
+yum install docker Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel git -y >> /dev/null 2>&1
+curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose >> /dev/null 2>&1
 cd ~
+
 hostnamectl set-hostname owncloud
 git clone https://github.com/Adepurnomo/banner.git >> /dev/null 2>&1
 \cp /root/banner/issue.net /etc
@@ -40,8 +42,6 @@ sed -i "s|#Banner none|Banner /etc/issue.net|" sshd_config
 chmod a+x /etc/ssh/sshd_config
 rm -rf /root/banner
 echo "${kuning}Create instance..."  
-echo "-------------------------------------------------"
-
 ########################################################
 mkdir -p /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
@@ -126,7 +126,7 @@ EOF
 chmod 777 /opt/owncloud-docker-server/.env
 ########################################################
 cd ~
-systemctl start docker.service && systemctl enable docker.service > /dev/null 2>&1
+systemctl start docker.service && systemctl enable docker.service >> /dev/null 2>&1
 echo "----------------------------------------------------------------------"
 source "/opt/temp/spinner.sh"
 start_spinner 'Build and starting Only office document server, please wait (a minut)...'
@@ -137,14 +137,14 @@ cd /opt/temp/
 stop_spinner $?
 echo "${kuning}Only office document server..               ${hijau}[Started]"
 sleep 5
-echo "----------------------------------------------------------------------"
+echo "${kuning}----------------------------------------------------------------------"
 source "/opt/temp/spinner.sh"
 start_spinner 'Build and starting Owncloud server, please wait (a minute) ....'
 sleep 1
 cd /opt/owncloud-docker-server/
 docker-compose up -d > /dev/null 2>&1
 stop_spinner $?
-echo "${kuning}Owncloud server..                           ${hijau}[started]"
+echo "${kuning}Owncloud server..                           ${hijau}[Started]"
 sleep 5
 echo "----------------------------------------------------------------------"
 cd /opt
@@ -152,7 +152,7 @@ git clone https://github.com/netdata/netdata.git >> /dev/null 2>&1
 sed -i 's/TWAIT} -eq 0 /TWAIT} -eq 1 /g' /opt/netdata/netdata-installer.sh
 chmod a+x /opt/netdata/netdata-installer.sh
 source "/opt/temp/spinner.sh"
-start_spinner 'Installing netdata, please wait ....'
+start_spinner 'Installing netdata, please wait (a minut)....'
 sleep 1
 cd /opt/netdata/
 ./netdata-installer.sh > /dev/null 2>&1
@@ -160,10 +160,10 @@ cd /opt/temp/
 stop_spinner $?
 cd ~
 servis=$(systemctl status netdata | grep Active)
-echo "${kuning}Netdata.. ${hijau}$servis"
+echo "${kuning}Netdata status..       ${hijau}$servis"
 sleep 10
+rm -rf /opt/temp
 ########################################################
-clear
 echo "${hijau}Complete ..."
 echo "${hijau}Enjoy !! ..."
 host=$(hostname -I)
@@ -178,5 +178,3 @@ echo "${kuning}-----------------------------------------------------------------
 echo "for Netdata acces http://$host:19999"
 echo "${kuning}----------------------------------------------------------------------"
 service sshd restart > /dev/null 2>&1
-sleep 10
-echo "${kuning}----------------------------------------------------------------------"
