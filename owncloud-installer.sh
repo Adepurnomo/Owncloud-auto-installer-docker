@@ -1,53 +1,47 @@
 #!/bin/bash
 ##
+kuning=$(tput setaf 3)
 hijau=$(tput setaf 2)
-echo "${hijau}-------------------------------------------------"
-echo "${hijau}Please run this scripts on SU"
+echo "${kuning}-------------------------------------------------"
+echo "${kuning}Please run this scripts on SU"
 sudo su -
-echo "${hijau}-------------------------------------------------"
-echo "${hijau}Configure firewalld..."
+echo "${kuning}-------------------------------------------------"
+echo "${kuning}Configure firewalld..."
 setenforce 0
+mkdir -p /opt/temp/
 cd /etc/sysconfig
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
-echo "-------------------------------------------------"
-echo "white list port 80"
+echo "${kuning}-------------------------------------------------"
+echo "${kuning}white list port 80"
 firewall-cmd --zone=public --add-port=80/tcp --permanent 
-echo "-------------------------------------------------"
-echo "white list port 443"
+echo "${kuning}-------------------------------------------------"
+echo "${kuning}white list port 443"
 firewall-cmd --zone=public --add-port=443/tcp --permanent 
-echo "-------------------------------------------------"
-echo "white list port 8080"
+echo "${kuning}-------------------------------------------------"
+echo "${kuning}white list port 8080"
 firewall-cmd --zone=public --add-port=8080/tcp --permanent 
-echo "-------------------------------------------------"
-echo "white list port 19999"
+echo "${kuning}-------------------------------------------------"
+echo "${kuning}white list port 19999"
 firewall-cmd --zone=public --add-port=19999/tcp --permanent 
-echo "-------------------------------------------------"
-firewall-cmd --reload 
+echo "${kuning}-------------------------------------------------"
+firewall-cmd --reload
+ 
 cd ~
-echo "Install dependencies....."
-yum install Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel git -y > /dev/null 2>&1
+echo "${kuning}Initializing....."
+curl -o /opt/temp/spinner.sh https://raw.githubusercontent.com/tlatsas/bash-spinner/master/spinner.sh > /dev/null 2>&1
+yum install docker Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel git -y && curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose >> /dev/null 2>&1
+cd ~
 hostnamectl set-hostname owncloud
-cd ~
-git clone https://github.com/Adepurnomo/banner.git 
+git clone https://github.com/Adepurnomo/banner.git >> /dev/null 2>&1
 \cp /root/banner/issue.net /etc
 chmod a+x /etc/issue.net
 cd /etc/ssh/ 	
 sed -i "s|#Banner none|Banner /etc/issue.net|" sshd_config
 chmod a+x /etc/ssh/sshd_config
 rm -rf /root/banner
+echo "${kuning}Create instance..."  
+echo "-------------------------------------------------"
 
-echo "-------------------------------------------------"
-echo "${hijau}Working....."
-echo "-------------------------------------------------"
-echo "${hijau}get docker composer..please wait ..."
-echo "-------------------------------------------------"
-curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose > /dev/null 2>&1
-chmod +x /usr/local/bin/docker-compose
-echo "${hijau}Installing docker..."
-echo "-------------------------------------------------"
-yum install docker -y > /dev/null 2>&1
-echo "${hijau}Create instance..."  
-echo "-------------------------------------------------"
 ########################################################
 mkdir -p /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
@@ -133,38 +127,56 @@ chmod 777 /opt/owncloud-docker-server/.env
 ########################################################
 cd ~
 systemctl start docker.service && systemctl enable docker.service > /dev/null 2>&1
-echo "${hijau}Downloading images docker from source *Sabarr ya ganss ..."
 echo "----------------------------------------------------------------------"
-echo "${hijau}Build and starting Only office document server, please wait..."
+source "/opt/temp/spinner.sh"
+start_spinner 'Build and starting Only office document server, please wait (a minut)...'
+sleep 1
+cd ~
 docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver > /dev/null 2>&1
-echo "${hijau}Only office document server, started..."
-docker ps | grep  onlyoffice/documentserver
+cd /opt/temp/
+stop_spinner $?
+echo "${kuning}Only office document server..               ${hijau}[Started]"
 sleep 5
 echo "----------------------------------------------------------------------"
+source "/opt/temp/spinner.sh"
+start_spinner 'Build and starting Owncloud server, please wait (a minute) ....'
+sleep 1
 cd /opt/owncloud-docker-server/
-echo "${hijau}Build and starting Owncloud server, please wait ..."
 docker-compose up -d > /dev/null 2>&1
-echo "${hijau}Owncloud server, started..."
-docker ps | grep owncloud
+stop_spinner $?
+echo "${kuning}Owncloud server..                           ${hijau}[started]"
 sleep 5
 echo "----------------------------------------------------------------------"
 cd /opt
-git clone https://github.com/netdata/netdata.git
+git clone https://github.com/netdata/netdata.git >> /dev/null 2>&1
 sed -i 's/TWAIT} -eq 0 /TWAIT} -eq 1 /g' /opt/netdata/netdata-installer.sh
 chmod a+x /opt/netdata/netdata-installer.sh
+source "/opt/temp/spinner.sh"
+start_spinner 'Installing netdata, please wait ....'
+sleep 1
 cd /opt/netdata/
-./netdata-installer.sh
+./netdata-installer.sh > /dev/null 2>&1
+cd /opt/temp/
+stop_spinner $?
+cd ~
+servis=$(systemctl status netdata | grep Active)
+echo "${kuning}Netdata.. ${hijau}$servis"
+sleep 10
 ########################################################
+clear
 echo "${hijau}Complete ..."
 echo "${hijau}Enjoy !! ..."
 host=$(hostname -I)
+echo "${kuning}----------------------------------------------------------------------"
 echo "for owncloud acces http://$host"
 echo "${hijau}Login information"
 echo "${hijau}ADMIN_USERNAME=admin"
 echo "${hijau}ADMIN_PASSWORD=admin"
+echo "${kuning}----------------------------------------------------------------------"
 echo "for Document server acces http://$host:8080"
+echo "${kuning}----------------------------------------------------------------------"
 echo "for Netdata acces http://$host:19999"
-echo "----------------------------------------------------------------------"
+echo "${kuning}----------------------------------------------------------------------"
 service sshd restart > /dev/null 2>&1
 sleep 10
-echo "----------------------------------------------------------------------"
+echo "${kuning}----------------------------------------------------------------------"
