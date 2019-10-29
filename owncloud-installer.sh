@@ -144,7 +144,7 @@ cd ~
 docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver > /dev/null 2>&1
 cd /opt/temp/
 stop_spinner $?
-echo "${kuning}Only office document server..               ${hijau}[Started]"
+echo "${kuning}Only office document server..               ${hijau}[Started]         "
 sleep 5
 ########################################################
 echo "${kuning}----------------------------------------------------------------------"
@@ -154,7 +154,7 @@ sleep 1
 cd /opt/owncloud-docker-server/
 docker-compose up -d > /dev/null 2>&1
 stop_spinner $?
-echo "${kuning}Owncloud server..                           ${hijau}[Started]"
+echo "${kuning}Owncloud server..                           ${hijau}[Started]         "
 sleep 5
 echo "${kuning}----------------------------------------------------------------------"
 ########################################################
@@ -173,19 +173,21 @@ cd /opt/temp/
 stop_spinner $?
 ########################################################
 cd ~
-servis=$(systemctl status netdata | grep Active)
+servis=$(systemctl status netdata | grep running)
+echo "${kuning}----------------------------------------------------------------------"
 echo "${kuning}Netdata status..       ${hijau}$servis"
 sleep 10
 rm -rf /opt/temp
 ########################################################
-echo "${hijau}Complete ..."
-echo "${hijau}Enjoy !! ..."
+echo "${kuning}----------------------------------------------------------------------"
+echo "${hijau}          .......... Complete ...........                              "
+echo "${hijau}           ..........Enjoy !!..........                                "
 host=$(hostname -I)
 echo "${kuning}----------------------------------------------------------------------"
 echo "for owncloud acces http://$host"
-echo "${hijau}Login information"
-echo "${hijau}ADMIN_USERNAME=admin"
-echo "${hijau}ADMIN_PASSWORD=admin"
+echo "${hijau}Login information                                                      "
+echo "${hijau}ADMIN_USERNAME=admin                                                   "
+echo "${hijau}ADMIN_PASSWORD=admin                                                   "
 echo "${kuning}----------------------------------------------------------------------"
 echo "for Document server acces http://$host:8080"
 echo "${kuning}----------------------------------------------------------------------"
