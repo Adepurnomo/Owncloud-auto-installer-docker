@@ -136,7 +136,7 @@ chmod 777 /opt/owncloud-docker-server/.env
 cd ~
 systemctl start docker.service >> /dev/null 2>&1
 systemctl enable docker.service >> /dev/null 2>&1
-echo "----------------------------------------------------------------------"
+echo "${kuning}----------------------------------------------------------------------"
 source "/opt/temp/spinner.sh"
 start_spinner 'Build and starting Only office document server, please wait (a minut.....'
 sleep 1
@@ -155,7 +155,7 @@ docker-compose up -d > /dev/null 2>&1
 stop_spinner $?
 echo "${kuning}Owncloud server..                           ${hijau}[Started]"
 sleep 5
-echo "----------------------------------------------------------------------"
+echo "${kuning}----------------------------------------------------------------------"
 #Clone netdata from source
 cd /opt
 git clone https://github.com/netdata/netdata.git >> /dev/null 2>&1
@@ -163,7 +163,7 @@ git clone https://github.com/netdata/netdata.git >> /dev/null 2>&1
 sed -i 's/TWAIT} -eq 0 /TWAIT} -eq 1 /g' /opt/netdata/netdata-installer.sh
 chmod a+x /opt/netdata/netdata-installer.sh
 source "/opt/temp/spinner.sh"
-start_spinner 'Installing netdata, please wait (a minut)....'
+start_spinner 'Installing netdata, please wait (a minut....'
 sleep 1
 cd /opt/netdata/
 ./netdata-installer.sh > /dev/null 2>&1
