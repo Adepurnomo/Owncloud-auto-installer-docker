@@ -3,7 +3,7 @@
 kuning=$(tput setaf 3)
 hijau=$(tput setaf 2)
 echo "${kuning}-------------------------------------------------"
-echo "${kuning}       Please run this scripts on SU             "
+echo "${kuning}        Please run this scripts on SU            "
 sudo su -
 echo "${kuning}-------------------------------------------------"
 echo "${kuning}Configure firewalld..."
@@ -27,7 +27,7 @@ echo "${kuning}white list port 19999"
 firewall-cmd --zone=public --add-port=19999/tcp --permanent 
 echo "${kuning}-------------------------------------------------"
 firewall-cmd --reload
- 
+ ########################################################
 cd ~
 echo "${kuning}Initializing....."
 #Spinner tks for owner
@@ -37,7 +37,7 @@ yum install docker Judy-devel autoconf autoconf-archive autogen automake gcc lib
 #docker composer
 curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose >> /dev/null 2>&1
 cd ~
-
+########################################################
 hostnamectl set-hostname owncloud
 git clone https://github.com/Adepurnomo/banner.git >> /dev/null 2>&1
 \cp /root/banner/issue.net /etc
@@ -146,6 +146,7 @@ cd /opt/temp/
 stop_spinner $?
 echo "${kuning}Only office document server..               ${hijau}[Started]"
 sleep 5
+########################################################
 echo "${kuning}----------------------------------------------------------------------"
 source "/opt/temp/spinner.sh"
 start_spinner 'Build and starting Owncloud server, please wait (a minute......'
@@ -156,6 +157,7 @@ stop_spinner $?
 echo "${kuning}Owncloud server..                           ${hijau}[Started]"
 sleep 5
 echo "${kuning}----------------------------------------------------------------------"
+########################################################
 #Clone netdata from source
 cd /opt
 git clone https://github.com/netdata/netdata.git >> /dev/null 2>&1
@@ -169,6 +171,7 @@ cd /opt/netdata/
 ./netdata-installer.sh > /dev/null 2>&1
 cd /opt/temp/
 stop_spinner $?
+########################################################
 cd ~
 servis=$(systemctl status netdata | grep Active)
 echo "${kuning}Netdata status..       ${hijau}$servis"
