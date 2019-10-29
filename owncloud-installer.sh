@@ -175,22 +175,22 @@ stop_spinner $?
 cd ~
 servis=$(systemctl status netdata | grep running)
 echo "${kuning}----------------------------------------------------------------------"
-echo "${kuning}Netdata status..       ${hijau}$servis"
+echo "${kuning}Netdata status..       ${hijau}$servis                                "
 sleep 10
 rm -rf /opt/temp
 ########################################################
 echo "${kuning}----------------------------------------------------------------------"
-echo "${hijau}          .......... Complete ...........                              "
-echo "${hijau}           ..........Enjoy !!..........                                "
+echo "${hijau}             .......... Complete ...........                           "
+echo "${hijau}              ..........Enjoy !!..........                             "
 host=$(hostname -I)
 echo "${kuning}----------------------------------------------------------------------"
-echo "for owncloud acces http://$host"
+echo "for owncloud acces http://$host                                                "
 echo "${hijau}Login information                                                      "
 echo "${hijau}ADMIN_USERNAME=admin                                                   "
 echo "${hijau}ADMIN_PASSWORD=admin                                                   "
 echo "${kuning}----------------------------------------------------------------------"
-echo "for Document server acces http://$host:8080"
+echo "for Document server acces http://$host:8080                                    "
 echo "${kuning}----------------------------------------------------------------------"
-echo "for Netdata acces http://$host:19999"
+echo "for Netdata acces http://$host:19999                                           "
 echo "${kuning}----------------------------------------------------------------------"
 service sshd restart > /dev/null 2>&1
