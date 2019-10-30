@@ -12,5 +12,5 @@
 
 Using curl
 
-run --> curl -sL https://raw.githubusercontent.com/Adepurnomo/Owncloud_Installer_Centos/master/owncloud-installer.sh | sh
+run --> curl -sL https://raw.githubusercontent.com/Adepurnomo/Owncloud_only_office_document_server_Installer_CentOS_7/master/owncloud-installer.sh | sh
 
