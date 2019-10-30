@@ -157,7 +157,7 @@ echo "${kuning}|                                                                
 echo "${kuning}|      -----------------------------------------------------------     |"
 echo "${kuning}<---------------------------------------------------------------------->"
 source "/opt/temp/spinner.sh"
-start_spinner 'Build and starting Owncloud server, please wait (a minute. . . . . . .> >'
+start_spinner 'Build and starting Owncloud server, please wait (a minute. . . . . . . >'
 sleep 1
 cd /opt/owncloud-docker-server/
 docker-compose up -d > /dev/null 2>&1
