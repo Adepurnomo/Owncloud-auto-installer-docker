@@ -2,34 +2,34 @@
 ##
 kuning=$(tput setaf 3)
 hijau=$(tput setaf 2)
-echo "${kuning}-------------------------------------------------"
-echo "${kuning}        Please run this scripts on SU            "
 sudo su -
-echo "${kuning}-------------------------------------------------"
-echo "${kuning}Configure firewalld..."
+echo "${kuning}^-------------------------------------------------^"
+echo "${kuning}|        Please run this scripts on SU            |"
+echo "${kuning}|-------------------------------------------------|"
+echo "${kuning}|             Configure firewalld...              |"
 setenforce 0
 mkdir -p /opt/temp/
 cd /etc/sysconfig
 #disbale selinux
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
 #configure firewall
-echo "${kuning}-------------------------------------------------"
-echo "${kuning}white list port 80"
+echo "${kuning}|-------------------------------------------------|"
+echo "${kuning}|             white list port 80                  |"
 firewall-cmd --zone=public --add-port=80/tcp --permanent 
-echo "${kuning}-------------------------------------------------"
-echo "${kuning}white list port 443"
+echo "${kuning}|-------------------------------------------------|"
+echo "${kuning}|             white list port 443                 |" 
 firewall-cmd --zone=public --add-port=443/tcp --permanent 
-echo "${kuning}-------------------------------------------------"
-echo "${kuning}white list port 8080"
+echo "${kuning}|-------------------------------------------------|"
+echo "${kuning}|             white list port 8080                |"
 firewall-cmd --zone=public --add-port=8080/tcp --permanent 
-echo "${kuning}-------------------------------------------------"
-echo "${kuning}white list port 19999"
+echo "${kuning}|-------------------------------------------------|"
+echo "${kuning}|             white list port 19999               |"
 firewall-cmd --zone=public --add-port=19999/tcp --permanent 
-echo "${kuning}-------------------------------------------------"
+echo "${kuning}|-------------------------------------------------|"
 firewall-cmd --reload
  ########################################################
 cd ~
-echo "${kuning}Initializing....."
+echo "${kuning}|                 Initializing.....               |"
 #Spinner tks for owner
 curl -o /opt/temp/spinner.sh https://raw.githubusercontent.com/tlatsas/bash-spinner/master/spinner.sh >> /dev/null 2>&1
 #docker engine, netdata compiler
@@ -136,38 +136,41 @@ chmod 777 /opt/owncloud-docker-server/.env
 cd ~
 systemctl start docker.service >> /dev/null 2>&1
 systemctl enable docker.service >> /dev/null 2>&1
-echo "${kuning}----------------------------------------------------------------------"
-echo "${kuning}           for slow connections please be patient !!                  " 
-echo "${kuning}   view procces on new screen using tail /opt/temp/onlyoffice.log     "
-echo "${kuning}----------------------------------------------------------------------"
+echo "${kuning}|----------------------------------------------------------------------|"
+echo "${kuning}|           for slow connections please be patient !!                  |" 
+echo "${kuning}|                                                                      |"
+echo "${kuning}|   view procces on new screen using tail /opt/temp/onlyoffice.log     |"
+echo "${kuning}|----------------------------------------------------------------------|"
 source "/opt/temp/spinner.sh"
-start_spinner 'Build and starting Only office document server, please wait (a minut.....'
+start_spinner 'Build and starting Only office document server, please wait (a minut.> >'
 sleep 1
 cd ~
 docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver >> /opt/temp/onlyoffice.log
 cd /opt/temp/
 stop_spinner $?
-echo "${kuning}Only office document server..               ${hijau}[Started]         "
+echo "${kuning}|Only office document server..                ${hijau}[Started]        |"
 sleep 5
 ########################################################
-echo "${kuning}----------------------------------------------------------------------"
-echo "${kuning}           for slow connections please be patient !!                  " 
-echo "${kuning}    view procces on new screen using tail /opt/temp/Owncloud.log      "
-echo "${kuning}----------------------------------------------------------------------"
+echo "${kuning}^----------------------------------------------------------------------^"
+echo "${kuning}|           for slow connections please be patient !!                  |" 
+echo "${kuning}|                                                                      |" 
+echo "${kuning}|    view procces on new screen using tail /opt/temp/Owncloud.log      |"
+echo "${kuning}|----------------------------------------------------------------------|"
 source "/opt/temp/spinner.sh"
-start_spinner 'Build and starting Owncloud server, please wait (a minute......'
+start_spinner 'Build and starting Owncloud server, please wait (a minute. . . . . . .> >'
 sleep 1
 cd /opt/owncloud-docker-server/
 docker-compose up -d >> /opt/temp/Owncloud.log
 stop_spinner $?
-echo "${kuning}Owncloud server..                           ${hijau}[Started]         "
+echo "${kuning}|Owncloud server..                           ${hijau}[Started]         |"
 sleep 5
-echo "${kuning}----------------------------------------------------------------------"
+echo "${kuning}|----------------------------------------------------------------------|"
 ########################################################
-echo "${kuning}----------------------------------------------------------------------"
-echo "${kuning}           for slow connections please be patient !!                  " 
-echo "${kuning}     view procces on new screen using tail /opt/temp/netdata.log      "
-echo "${kuning}----------------------------------------------------------------------"
+echo "${kuning}|----------------------------------------------------------------------|"
+echo "${kuning}|           for slow connections please be patient !!                  |" 
+echo "${kuning}|                                                                      |"
+echo "${kuning}|     view procces on new screen using tail /opt/temp/netdata.log      |"
+echo "${kuning}|----------------------------------------------------------------------|"
 #Clone netdata from source
 cd /opt
 git clone https://github.com/netdata/netdata.git >> /dev/null 2>&1
@@ -184,23 +187,24 @@ stop_spinner $?
 ########################################################
 cd ~
 servis=$(systemctl status netdata | grep running)
-echo "${kuning}----------------------------------------------------------------------"
-echo "${kuning}Netdata status..       ${hijau}$servis                                "
+echo "${kuning}|----------------------------------------------------------------------|"
+echo "${kuning}|Netdata status..${hijau}$servis                                        "
 sleep 10
 rm -rf /opt/temp
 ########################################################
-echo "${kuning}----------------------------------------------------------------------"
-echo "${hijau}             .......... Complete ...........                           "
-echo "${hijau}              ..........Enjoy !!..........                             "
+echo "${kuning}|----------------------------------------------------------------------|"
+echo "${hijau}|             .......... Complete ...........                           |"
+echo "${kuning}|                                                                      |"
+echo "${hijau}|               ..........Enjoy !!..........                            |"
 host=$(hostname -I)
-echo "${kuning}----------------------------------------------------------------------"
-echo "for owncloud acces http://$host                                                "
-echo "${hijau}Login information                                                      "
-echo "${hijau}ADMIN_USERNAME=admin                                                   "
-echo "${hijau}ADMIN_PASSWORD=admin                                                   "
-echo "${kuning}----------------------------------------------------------------------"
-echo "for Document server acces http://$host:8080                                    "
-echo "${kuning}----------------------------------------------------------------------"
-echo "for Netdata acces http://$host:19999                                           "
-echo "${kuning}----------------------------------------------------------------------"
+echo "${kuning}|----------------------------------------------------------------------|"
+echo "${hijau}|for owncloud acces http://$host                                         "
+echo "${hijau}|Login information                                                      |"
+echo "${hijau}|ADMIN_USERNAME=admin                                                   |"
+echo "${hijau}|ADMIN_PASSWORD=admin                                                   |"
+echo "${kuning}|----------------------------------------------------------------------|"
+echo "${kuning}|for Document server acces http://$host:8080                            "
+echo "${kuning}|----------------------------------------------------------------------|"
+echo "${kuning}|for Netdata acces http://$host:19999                                   "
+echo "${kuning}|----------------------------------------------------------------------|"
 service sshd restart > /dev/null 2>&1
