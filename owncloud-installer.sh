@@ -137,6 +137,8 @@ cd ~
 systemctl start docker.service >> /dev/null 2>&1
 systemctl enable docker.service >> /dev/null 2>&1
 echo "${kuning}----------------------------------------------------------------------"
+echo "${kuning}           for slow connections please be patient :v                  " 
+echo "${kuning}----------------------------------------------------------------------"
 source "/opt/temp/spinner.sh"
 start_spinner 'Build and starting Only office document server, please wait (a minut.....'
 sleep 1
