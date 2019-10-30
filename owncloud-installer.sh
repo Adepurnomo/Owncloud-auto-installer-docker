@@ -3,7 +3,7 @@
 kuning=$(tput setaf 3)
 hijau=$(tput setaf 2)
 sudo su -
-echo "${kuning}^-------------------------------------------------^"
+echo "${kuning}<------------------------------------------------->"
 echo "${kuning}|        Please run this scripts on SU            |"
 echo "${kuning}|-------------------------------------------------|"
 echo "${kuning}|             Configure firewalld...              |"
@@ -16,13 +16,13 @@ sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
 echo "${kuning}<------------------------------------------------->"
 echo "${kuning}             white list port 80                  "
 firewall-cmd --zone=public --add-port=80/tcp --permanent 
-echo "${kuning}-------------------------------------------------"
+echo "${kuning}------------------------------------------------->"
 echo "${kuning}             white list port 443                 " 
 firewall-cmd --zone=public --add-port=443/tcp --permanent 
-echo "${kuning}-------------------------------------------------"
+echo "${kuning}<-------------------------------------------------"
 echo "${kuning}             white list port 8080                "
 firewall-cmd --zone=public --add-port=8080/tcp --permanent 
-echo "${kuning}-------------------------------------------------"
+echo "${kuning}------------------------------------------------->"
 echo "${kuning}             white list port 19999               "
 firewall-cmd --zone=public --add-port=19999/tcp --permanent 
 echo "${kuning}<------------------------------------------------->"
@@ -136,26 +136,26 @@ chmod 777 /opt/owncloud-docker-server/.env
 cd ~
 systemctl start docker.service >> /dev/null 2>&1
 systemctl enable docker.service >> /dev/null 2>&1
-echo "${kuning}|----------------------------------------------------------------------|"
+echo "${kuning}<---------------------------------------------------------------------->"
 echo "${kuning}|           for slow connections please be patient !!                  |" 
 echo "${kuning}|                                                                      |"
-echo "${kuning}|   view procces on new screen using tail /opt/temp/onlyoffice.log     |"
-echo "${kuning}|----------------------------------------------------------------------|"
+echo "${kuning}|      -----------------------------------------------------------     |"
+echo "${kuning}<---------------------------------------------------------------------->"
 source "/opt/temp/spinner.sh"
 start_spinner 'Build and starting Only office document server, please wait (a minut.> >'
 sleep 1
 cd ~
-docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver >> /opt/temp/onlyoffice.log
+docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver > /opt/temp/onlyoffice.log
 cd /opt/temp/
 stop_spinner $?
 echo "${kuning}|Only office document server..                ${hijau}[Started]        |"
 sleep 5
 ########################################################
-echo "${kuning}^----------------------------------------------------------------------^"
+echo "${kuning}<---------------------------------------------------------------------->"
 echo "${kuning}|           for slow connections please be patient !!                  |" 
 echo "${kuning}|                                                                      |" 
-echo "${kuning}|    view procces on new screen using tail /opt/temp/Owncloud.log      |"
-echo "${kuning}|----------------------------------------------------------------------|"
+echo "${kuning}|      -----------------------------------------------------------     |"
+echo "${kuning}<---------------------------------------------------------------------->"
 source "/opt/temp/spinner.sh"
 start_spinner 'Build and starting Owncloud server, please wait (a minute. . . . . . .> >'
 sleep 1
@@ -166,11 +166,11 @@ echo "${kuning}|Owncloud server..                           ${hijau}[Started]   
 sleep 5
 echo "${kuning}|----------------------------------------------------------------------|"
 ########################################################
-echo "${kuning}|----------------------------------------------------------------------|"
+echo "${kuning}<---------------------------------------------------------------------->"
 echo "${kuning}|           for slow connections please be patient !!                  |" 
 echo "${kuning}|                                                                      |"
-echo "${kuning}|     view procces on new screen using tail /opt/temp/netdata.log      |"
-echo "${kuning}|----------------------------------------------------------------------|"
+echo "${kuning}|      -----------------------------------------------------------     |"
+echo "${kuning}<---------------------------------------------------------------------->"
 #Clone netdata from source
 cd /opt
 git clone https://github.com/netdata/netdata.git >> /dev/null 2>&1
@@ -181,7 +181,7 @@ source "/opt/temp/spinner.sh"
 start_spinner 'Installing netdata, please wait (a minut....'
 sleep 1
 cd /opt/netdata/
-./netdata-installer.sh >> /opt/temp/netdata.log 
+./netdata-installer.sh > /opt/temp/netdata.log 
 cd /opt/temp/
 stop_spinner $?
 ########################################################
