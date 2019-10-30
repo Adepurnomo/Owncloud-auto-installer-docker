@@ -145,7 +145,7 @@ source "/opt/temp/spinner.sh"
 start_spinner 'Build and starting Only office document server, please wait (a minut.> >'
 sleep 1
 cd ~
-docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver > /opt/temp/onlyoffice.log
+docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver > /dev/null 2>&1
 cd /opt/temp/
 stop_spinner $?
 echo "${kuning}|Only office document server..                ${hijau}[Started]        |"
@@ -160,7 +160,7 @@ source "/opt/temp/spinner.sh"
 start_spinner 'Build and starting Owncloud server, please wait (a minute. . . . . . .> >'
 sleep 1
 cd /opt/owncloud-docker-server/
-docker-compose up -d >> /opt/temp/Owncloud.log
+docker-compose up -d > /dev/null 2>&1
 stop_spinner $?
 echo "${kuning}|Owncloud server..                           ${hijau}[Started]         |"
 sleep 5
@@ -181,7 +181,7 @@ source "/opt/temp/spinner.sh"
 start_spinner 'Installing netdata, please wait (a minut....'
 sleep 1
 cd /opt/netdata/
-./netdata-installer.sh > /opt/temp/netdata.log 
+./netdata-installer.sh > /dev/null 2>&1 
 cd /opt/temp/
 stop_spinner $?
 ########################################################
