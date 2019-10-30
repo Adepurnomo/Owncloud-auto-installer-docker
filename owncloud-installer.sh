@@ -137,29 +137,37 @@ cd ~
 systemctl start docker.service >> /dev/null 2>&1
 systemctl enable docker.service >> /dev/null 2>&1
 echo "${kuning}----------------------------------------------------------------------"
-echo "${kuning}           for slow connections please be patient :v                  " 
+echo "${kuning}           for slow connections please be patient !!                  " 
+echo "${kuning}   view procces on new screen using tail /opt/temp/onlyoffice.log     "
 echo "${kuning}----------------------------------------------------------------------"
 source "/opt/temp/spinner.sh"
 start_spinner 'Build and starting Only office document server, please wait (a minut.....'
 sleep 1
 cd ~
-docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver > /dev/null 2>&1
+docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver >> /opt/temp/onlyoffice.log
 cd /opt/temp/
 stop_spinner $?
 echo "${kuning}Only office document server..               ${hijau}[Started]         "
 sleep 5
 ########################################################
 echo "${kuning}----------------------------------------------------------------------"
+echo "${kuning}           for slow connections please be patient !!                  " 
+echo "${kuning}    view procces on new screen using tail /opt/temp/Owncloud.log      "
+echo "${kuning}----------------------------------------------------------------------"
 source "/opt/temp/spinner.sh"
 start_spinner 'Build and starting Owncloud server, please wait (a minute......'
 sleep 1
 cd /opt/owncloud-docker-server/
-docker-compose up -d > /dev/null 2>&1
+docker-compose up -d >> /opt/temp/Owncloud.log
 stop_spinner $?
 echo "${kuning}Owncloud server..                           ${hijau}[Started]         "
 sleep 5
 echo "${kuning}----------------------------------------------------------------------"
 ########################################################
+echo "${kuning}----------------------------------------------------------------------"
+echo "${kuning}           for slow connections please be patient !!                  " 
+echo "${kuning}     view procces on new screen using tail /opt/temp/netdata.log      "
+echo "${kuning}----------------------------------------------------------------------"
 #Clone netdata from source
 cd /opt
 git clone https://github.com/netdata/netdata.git >> /dev/null 2>&1
@@ -170,7 +178,7 @@ source "/opt/temp/spinner.sh"
 start_spinner 'Installing netdata, please wait (a minut....'
 sleep 1
 cd /opt/netdata/
-./netdata-installer.sh > /dev/null 2>&1
+./netdata-installer.sh >> /opt/temp/netdata.log 
 cd /opt/temp/
 stop_spinner $?
 ########################################################
