@@ -13,19 +13,19 @@ cd /etc/sysconfig
 #disbale selinux
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
 #configure firewall
-echo "${kuning}|-------------------------------------------------|"
-echo "${kuning}|             white list port 80                  |"
+echo "${kuning}<------------------------------------------------->"
+echo "${kuning}             white list port 80                  "
 firewall-cmd --zone=public --add-port=80/tcp --permanent 
-echo "${kuning}|-------------------------------------------------|"
-echo "${kuning}|             white list port 443                 |" 
+echo "${kuning}-------------------------------------------------"
+echo "${kuning}             white list port 443                 " 
 firewall-cmd --zone=public --add-port=443/tcp --permanent 
-echo "${kuning}|-------------------------------------------------|"
-echo "${kuning}|             white list port 8080                |"
+echo "${kuning}-------------------------------------------------"
+echo "${kuning}             white list port 8080                "
 firewall-cmd --zone=public --add-port=8080/tcp --permanent 
-echo "${kuning}|-------------------------------------------------|"
-echo "${kuning}|             white list port 19999               |"
+echo "${kuning}-------------------------------------------------"
+echo "${kuning}             white list port 19999               "
 firewall-cmd --zone=public --add-port=19999/tcp --permanent 
-echo "${kuning}|-------------------------------------------------|"
+echo "${kuning}<------------------------------------------------->"
 firewall-cmd --reload
  ########################################################
 cd ~
