@@ -1,37 +1,54 @@
 #!/bin/bash
 ##
+clear
+if [[ $EUID -ne 0 ]]; then
+   echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+   echo "            Please run this scripts on SU !               "
+   echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+   exit 1
+fi
+clear
+merah=$(tput setaf 1)
 kuning=$(tput setaf 3)
 hijau=$(tput setaf 2)
-sudo su -
-echo "${kuning}<------------------------------------------------->"
-echo "${kuning}|        Please run this scripts on SU            |"
-echo "${kuning}|-------------------------------------------------|"
-echo "${kuning}|             Configure firewalld...              |"
+echo "${kuning}<======================================================================>"
+echo "${kuning}                /\     | || |    | |     |  | |    |  |T|               "  
+echo "${kuning}               / /\    |      |  | |     |  | |\  /|                    "
+echo "${kuning}              / /  \   | | | |   | |     |  | |\\/ |  |A|               "
+echo "${kuning}             / /    \  | |  |    | |     |  | | /  |  | |               "
+echo "${kuning}            / /      \ |_|   |    | | | |   |_|    |  |_|               "
+echo "${kuning}<======================================================================>"
+echo "${hijau}                               INSTALLER                                 "
+echo "${kuning}<---------------------------------------------------------------------->"
+echo "${kuning}<---------------------------------------------------------------------->"
+echo "${kuning}|                   Please run this scripts on SU                      |"
+echo "${kuning}|----------------------------------------------------------------------|"
+echo "${kuning}|                      Configure firewalld...                          |"
 setenforce 0
 mkdir -p /opt/temp/
 cd /etc/sysconfig
 #disbale selinux
 sed -i "s|SELINUX=enforcing|SELINUX=disabled|" selinux
 #configure firewall
-echo "${kuning}<------------------------------------------------->"
-echo "${kuning}             white list port 80                  "
+echo "${kuning}<----------------------------------------------------------------------"
+echo "${kuning}                        white list port 80                             "
 firewall-cmd --zone=public --add-port=80/tcp --permanent 
-echo "${kuning}------------------------------------------------->"
-echo "${kuning}             white list port 443                 " 
+echo "${kuning}---------------------------------------------------------------------->"
+echo "${kuning}                        white list port 443                            " 
 firewall-cmd --zone=public --add-port=443/tcp --permanent 
-echo "${kuning}<-------------------------------------------------"
-echo "${kuning}             white list port 8080                "
+echo "${kuning}<----------------------------------------------------------------------"
+echo "${kuning}                       white list port 8080                            "
 firewall-cmd --zone=public --add-port=8080/tcp --permanent 
-echo "${kuning}------------------------------------------------->"
-echo "${kuning}             white list port 19999               "
+echo "${kuning}---------------------------------------------------------------------->"
+echo "${kuning}                      white list port 19999                            "
 firewall-cmd --zone=public --add-port=19999/tcp --permanent 
-echo "${kuning}<------------------------------------------------->"
+echo "${kuning}<----------------------------------------------------------------------"
 firewall-cmd --reload
  ########################################################
 cd ~
-echo "${kuning}|                 Initializing.....               |"
+echo "${kuning}|                         Initializing.....                           |"
 #Spinner tks for owner
-curl -o /opt/temp/spinner.sh https://raw.githubusercontent.com/tlatsas/bash-spinner/master/spinner.sh >> /dev/null 2>&1
+curl -o /opt/temp/spinner.sh https://raw.githubusercontent.com/tlatsas/bash-spinner/master/spinner.sh > /dev/null 2>&1
 #docker engine, netdata compiler
 yum install docker Judy-devel autoconf autoconf-archive autogen automake gcc libmnl-devel libuuid-devel libuv-devel lz4-devel nmap-ncat openssl-devel zlib-devel git -y >> /dev/null 2>&1
 #docker composer
@@ -46,7 +63,8 @@ cd /etc/ssh/
 sed -i "s|#Banner none|Banner /etc/issue.net|" sshd_config
 chmod a+x /etc/ssh/sshd_config
 rm -rf /root/banner
-echo "${kuning}Create instance..."  
+echo "${kuning}<----------------------------------------------------------------------"
+echo "${kuning}                         Create instance...                            "  
 ########################################################
 mkdir -p /opt/owncloud-docker-server > /dev/null 2>&1
 chmod 777 /opt/owncloud-docker-server > /dev/null 2>&1
@@ -142,13 +160,13 @@ echo "${kuning}|                                                                
 echo "${kuning}|      -----------------------------------------------------------     |"
 echo "${kuning}<---------------------------------------------------------------------->"
 source "/opt/temp/spinner.sh"
-start_spinner '|Build and starting Only office document server, please wait (a minut.> >'
+start_spinner '|Build and starting Only office document server, please wait (a minut -->'
 sleep 1
 cd ~
 docker run -i -t -d -p 8080:80 --restart=always onlyoffice/documentserver > /dev/null 2>&1
 cd /opt/temp/
 stop_spinner $?
-echo "${kuning}|Only office document server..                ${hijau}[Started]        |"
+echo "${kuning}|Only office document server.. ${merah}-->    ${hijau}[Started]        |"
 sleep 5
 ########################################################
 echo "${kuning}<---------------------------------------------------------------------->"
@@ -157,12 +175,12 @@ echo "${kuning}|                                                                
 echo "${kuning}|      -----------------------------------------------------------     |"
 echo "${kuning}<---------------------------------------------------------------------->"
 source "/opt/temp/spinner.sh"
-start_spinner '|Build and starting Owncloud server, please wait (a minute. . . . . . .>'
+start_spinner '|Build and starting Owncloud server, please wait (a minute. . . . . . -->'
 sleep 1
 cd /opt/owncloud-docker-server/
 docker-compose up -d > /dev/null 2>&1
 stop_spinner $?
-echo "${kuning}|Owncloud server..                           ${hijau}[Started]         |"
+echo "${kuning}|Owncloud server..             ${merah}-->    ${hijau}[Started]        |"
 sleep 5
 echo "${kuning}|----------------------------------------------------------------------|"
 ########################################################
@@ -178,7 +196,7 @@ git clone https://github.com/netdata/netdata.git >> /dev/null 2>&1
 sed -i 's/TWAIT} -eq 0 /TWAIT} -eq 1 /g' /opt/netdata/netdata-installer.sh
 chmod a+x /opt/netdata/netdata-installer.sh
 source "/opt/temp/spinner.sh"
-start_spinner '|Installing netdata, please wait (a minut . . . . . . . . . . . . . . .>'
+start_spinner '|Installing netdata, please wait (a minut . . . . . . . . . . . . . . -->'
 sleep 1
 cd /opt/netdata/
 ./netdata-installer.sh > /dev/null 2>&1 
@@ -193,15 +211,15 @@ sleep 10
 rm -rf /opt/temp
 ########################################################
 echo "${kuning} ---------------------------------------------------------------------->"
-echo "${hijau}|             .......... Complete ...........                           |"
-echo "${kuning}|                                                                      |"
-echo "${hijau}|               ..........Enjoy !!..........                            |"
+echo "${hijau}|             .......... Complete ...........                          |"
+echo "${hijau}|                                                                      |"
+echo "${hijau}|               ..........Enjoy !!..........                           |"
 host=$(hostname -I)
 echo "${kuning}<---------------------------------------------------------------------- "
 echo "${hijau}|for owncloud acces http://$host                                         "
-echo "${hijau}|Login information                                                      |"
-echo "${hijau}|ADMIN_USERNAME=admin                                                   |"
-echo "${hijau}|ADMIN_PASSWORD=admin                                                   |"
+echo "${hijau}|Login information                                                     |"
+echo "${hijau}|ADMIN_USERNAME=admin                                                  |"
+echo "${hijau}|ADMIN_PASSWORD=admin                                                  |"
 echo "${kuning} ---------------------------------------------------------------------->"
 echo "${kuning}|for Document server acces http://$host:8080                            "
 echo "${kuning}<----------------------------------------------------------------------|"
