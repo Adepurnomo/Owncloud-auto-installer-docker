@@ -211,10 +211,10 @@ sleep 10
 rm -rf /opt/temp
 ########################################################
 echo "${kuning} ---------------------------------------------------------------------->"
-echo "${hijau}|             .......... Complete ...........                          |"
+echo "${hijau}|                  .......... Complete ...........                     |"
 echo "${hijau}|                                                                      |"
-echo "${hijau}|               ..........Enjoy !!..........                           |"
-host=$(hostname -I)
+echo "${hijau}|                    ..........Enjoy !!..........                      |"
+host=$(hostname -I)     
 echo "${kuning}<---------------------------------------------------------------------- "
 echo "${hijau}|for owncloud acces http://$host                                         "
 echo "${hijau}|Login information                                                     |"
