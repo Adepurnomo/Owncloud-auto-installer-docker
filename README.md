@@ -1,14 +1,8 @@
 # running owncloud with only office document server on docker 
   open, edit, save and share your document or file on owncloud and monitor your instance with netdata
-  
-  https://github.com/netdata/netdata
-	
-  https://github.com/ONLYOFFICE/DocumentServer
-	
-  https://github.com/owncloud
+# After installing, login your owncloud -> click market > search "onlyoffice" > install plugin > setting > additional > only office & put your ip(same with yourowncloudserver):8080 > save > enjoy
   
 # Scripts For Centos7
-# Enjoy !!
 
 Using curl
 
