@@ -159,7 +159,6 @@ echo "${hijau}|Owncloud server..             ${merah}-->    ${hijau}[Started]   
 sleep 5
 echo "${hijau}<---------------------------------------------------------------------->"
 echo "${hijau}|           for slow connections please be patient !!                  |" 
-echo "${hijau}|                                                                      |"
 echo "${hijau}|      -----------------------------------------------------------     |"
 echo "${hijau}<---------------------------------------------------------------------->"
 cd /opt
